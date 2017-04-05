@@ -13,7 +13,7 @@ Institution: University of Illinois, IBM Thomas J. Watson Research Center
 
 ## What is this paper about?
 
-Algorithm refinement of WaveNet.
+Audio generation algorithm optimization of WaveNet.
 
 ## What makes this paper different from previous research?
 
@@ -24,7 +24,34 @@ Algorithm refinement of WaveNet.
 A single output sample is generated from cached state of previous timesteps.
 The cached state can be viewed as "recurrent" state with analogy of RNN.
 
-## Dataset used in this study
+![Figure3](img/FAST_WAVENET_GENERATION_ALGORITHM_Figure3.png)
+
+The algorithm has two components.
+
+- Generation Model
+- Convolution Queue
+
+Audio generation steps are,
+
+1. initialize generation model with pre-trained weights
+1. initialize the convolution queues with recurrent states with zero
+1. for each output sample
+  1. Pop Phase: the first recurrent state is popped off of queue.
+  1. feed the recurrent state to generation model
+  1. compute current output with recurrent states and input
+  1. Push Phase: computed recurrent states are pushed into queues
+
+### Complexity Analysis
+
+  | complexity  | Fast WaveNet | naive WaveNet |
+  |:-----------:|:------------:|:-------------:|
+  | computation |  O(L)        |     O(L^2)    |
+  | scape       |  O(2^L)      |     O(L^2)    |
+
+
+### Performance Experiment
+
+![FAST_WAVENET_GENERATION_ALGORITHM_Figure3](img/FAST_WAVENET_GENERATION_ALGORITHM_Figure7.png)
 
 
 ## Implementations
