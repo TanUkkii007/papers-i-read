@@ -9,7 +9,9 @@
 - [x] Deep Voice: Real-time Neural Text-to-Speech  https://arxiv.org/abs/1702.07825
 - [x] Fast Wavenet Generation Algorithm https://arxiv.org/abs/1611.09482
 - [ ] WaveNet: A Generative Model for Raw Audio https://arxiv.org/abs/1609.03499
-- [ ] Neural Audio Synthesis of Musical Notes with WaveNet Autoencoders https://arxiv.org/abs/1704.01279
+- [x] Neural Audio Synthesis of Musical Notes with WaveNet Autoencoders https://arxiv.org/abs/1704.01279
+- [x] SampleRNN: An Unconditional End-to-End Neural Audio Generation Model https://arxiv.org/abs/1612.07837
+- [ ] Char2Wav: End-to-End Speech Synthesis http://www.josesotelo.com/speechsynthesis
 
 
 ### Distributed System
