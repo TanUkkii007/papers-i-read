@@ -11,8 +11,8 @@
 - [ ] WaveNet: A Generative Model for Raw Audio https://arxiv.org/abs/1609.03499
 - [x] Neural Audio Synthesis of Musical Notes with WaveNet Autoencoders https://arxiv.org/abs/1704.01279
 - [x] SampleRNN: An Unconditional End-to-End Neural Audio Generation Model https://arxiv.org/abs/1612.07837
-- [ ] Char2Wav: End-to-End Speech Synthesis http://www.josesotelo.com/speechsynthesis
-
+- [x] Char2Wav: End-to-End Speech Synthesis http://www.josesotelo.com/speechsynthesis
+- [ ] [Generating Sequences With Recurrent Neural Networks](https://arxiv.org/abs/1308.0850)
 
 ### Distributed System
 
