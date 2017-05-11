@@ -12,7 +12,13 @@
 - [x] Neural Audio Synthesis of Musical Notes with WaveNet Autoencoders https://arxiv.org/abs/1704.01279
 - [x] SampleRNN: An Unconditional End-to-End Neural Audio Generation Model https://arxiv.org/abs/1612.07837
 - [x] Char2Wav: End-to-End Speech Synthesis http://www.josesotelo.com/speechsynthesis
-- [x] [Generating Sequences With Recurrent Neural Networks](https://arxiv.org/abs/1308.0850)
+- [x] Generating Sequences With Recurrent Neural Networks https://arxiv.org/abs/1308.0850
+
+### Machine Learning
+
+- [ ] Pixel Recurrent Neural Networks https://arxiv.org/abs/1601.06759
+- [ ] Conditional Image Generation with PixelCNN Decoders https://arxiv.org/abs/1606.05328
+- [ ] Qualitatively characterizing neural network optimization problems https://arxiv.org/abs/1412.6544
 
 ### Distributed System
 
@@ -25,5 +31,7 @@ Replicated Data Types https://hal.inria.fr/file/index/docid/555588/filename/tech
 - [ ] MapReduce: Simplified Data Processing on Large Clusters https://research.google.com/archive/mapreduce.html
 - [ ] HAT, not CAP: Towards Highly Available Transactions https://www.usenix.org/system/files/conference/hotos13/hotos13-final80.pdf
 - [ ] Highly Available Transactions: Virtues and Limitations https://arxiv.org/abs/1302.0309
+- [ ] Use of Formal Methods at Amazon Web Services http://lamport.azurewebsites.net/tla/amazon.html
+- [ ] Eventually Consistent - Revisited http://www.allthingsdistributed.com/2008/12/eventually_consistent.html
 - [ ] Borg, Omega, and Kubernetes  https://research.google.com/pubs/pub44843.html
 - [ ] Design patterns for container-based distributed systems https://research.google.com/pubs/pub45406.html
