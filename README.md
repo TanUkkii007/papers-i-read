@@ -16,7 +16,7 @@
 
 ### Machine Learning
 
-- [ ] Pixel Recurrent Neural Networks https://arxiv.org/abs/1601.06759
+- [x] Pixel Recurrent Neural Networks https://arxiv.org/abs/1601.06759
 - [ ] Conditional Image Generation with PixelCNN Decoders https://arxiv.org/abs/1606.05328
 - [ ] Qualitatively characterizing neural network optimization problems https://arxiv.org/abs/1412.6544
 - [ ] Deep Residual Learning for Image Recognition https://arxiv.org/abs/1512.03385
