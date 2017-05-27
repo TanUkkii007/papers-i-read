@@ -7,20 +7,25 @@
 ### Speech Processing
 
 - [x] Deep Voice: Real-time Neural Text-to-Speech  https://arxiv.org/abs/1702.07825
+- [ ] Deep Voice 2: Multi-Speaker Neural Text-to-Speech http://research.baidu.com/wp-content/uploads/2017/05/Deep-Voice-2-Complete-Arxiv.pdf
 - [x] Fast Wavenet Generation Algorithm https://arxiv.org/abs/1611.09482
 - [ ] WaveNet: A Generative Model for Raw Audio https://arxiv.org/abs/1609.03499
 - [x] Neural Audio Synthesis of Musical Notes with WaveNet Autoencoders https://arxiv.org/abs/1704.01279
 - [x] SampleRNN: An Unconditional End-to-End Neural Audio Generation Model https://arxiv.org/abs/1612.07837
 - [x] Char2Wav: End-to-End Speech Synthesis http://www.josesotelo.com/speechsynthesis
 - [x] Generating Sequences With Recurrent Neural Networks https://arxiv.org/abs/1308.0850
+- [ ] Voice Conversion Using Sequence-to-Sequence Learning of Context Posterior Probabilities https://arxiv.org/abs/1704.02360
+- [ ] Sampling-based speech parameter generation using moment-matching networks https://arxiv.org/abs/1704.03626
 
 ### Machine Learning
 
 - [x] Pixel Recurrent Neural Networks https://arxiv.org/abs/1601.06759
 - [ ] Conditional Image Generation with PixelCNN Decoders https://arxiv.org/abs/1606.05328
+- [ ] Parallel Multiscale Autoregressive Density Estimation https://arxiv.org/abs/1703.03664
 - [ ] Qualitatively characterizing neural network optimization problems https://arxiv.org/abs/1412.6544
-- [ ] Deep Residual Learning for Image Recognition https://arxiv.org/abs/1512.03385
+- [x] Deep Residual Learning for Image Recognition https://arxiv.org/abs/1512.03385
 - [ ] Attention and Augmented Recurrent Neural Networks http://distill.pub/2016/augmented-rnns
+- [ ] Convolutional Sequence to Sequence Learning https://arxiv.org/abs/1705.03122
 
 ### Distributed System
 
