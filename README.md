@@ -14,6 +14,8 @@
 - [x] SampleRNN: An Unconditional End-to-End Neural Audio Generation Model https://arxiv.org/abs/1612.07837
 - [x] Char2Wav: End-to-End Speech Synthesis http://www.josesotelo.com/speechsynthesis
 - [x] Generating Sequences With Recurrent Neural Networks https://arxiv.org/abs/1308.0850
+- [ ] Tacotron: Towards End-to-End Speech Synthesis https://arxiv.org/abs/1703.10135
+- [ ] Voice Conversion from Unaligned Corpora using Variational Autoencoding Wasserstein Generative Adversarial Networks https://arxiv.org/abs/1704.00849
 - [ ] Voice Conversion Using Sequence-to-Sequence Learning of Context Posterior Probabilities https://arxiv.org/abs/1704.02360
 - [ ] Sampling-based speech parameter generation using moment-matching networks https://arxiv.org/abs/1704.03626
 
@@ -26,6 +28,7 @@
 - [x] Deep Residual Learning for Image Recognition https://arxiv.org/abs/1512.03385
 - [ ] Attention and Augmented Recurrent Neural Networks http://distill.pub/2016/augmented-rnns
 - [ ] Convolutional Sequence to Sequence Learning https://arxiv.org/abs/1705.03122
+- [ ] Wasserstein GAN https://arxiv.org/abs/1701.07875
 
 ### Distributed System
 
