@@ -17,6 +17,7 @@
 - [ ] Tacotron: Towards End-to-End Speech Synthesis https://arxiv.org/abs/1703.10135
 - [ ] Connectionist Temporal Classification: Labelling Unsegmented Sequence Data with Recurrent Neural Networks http://www.cs.toronto.edu/~graves/icml_2006.pdf
 - [ ] Voice Conversion from Unaligned Corpora using Variational Autoencoding Wasserstein Generative Adversarial Networks https://arxiv.org/abs/1704.00849
+- [ ] Deep Speaker: an End-to-End Neural Speaker Embedding System https://arxiv.org/abs/1705.02304
 - [ ] Voice Conversion Using Sequence-to-Sequence Learning of Context Posterior Probabilities https://arxiv.org/abs/1704.02360
 - [ ] Sampling-based speech parameter generation using moment-matching networks https://arxiv.org/abs/1704.03626
 
