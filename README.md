@@ -29,6 +29,7 @@
 - [ ] Qualitatively characterizing neural network optimization problems https://arxiv.org/abs/1412.6544
 - [x] Deep Residual Learning for Image Recognition https://arxiv.org/abs/1512.03385
 - [ ] Batch Normalization: Accelerating Deep Network Training by Reducing Internal Covariate Shift https://arxiv.org/abs/1502.03167
+- [ ] Quasi-Recurrent Neural Networks https://arxiv.org/abs/1611.01576
 - [ ] Learning Phrase Representations using RNN Encoder-Decoder for Statistical Machine Translation https://arxiv.org/abs/1406.1078
 - [ ] Attention and Augmented Recurrent Neural Networks http://distill.pub/2016/augmented-rnns
 - [ ] Convolutional Sequence to Sequence Learning https://arxiv.org/abs/1705.03122
