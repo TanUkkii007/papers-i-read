@@ -56,6 +56,7 @@ class ResNet(object):
     
     def build_graph(self):
         """Build a whole graph for the model."""
+        # https://www.tensorflow.org/api_docs/python/tf/train/get_or_create_global_step
         self.global_step = tf.contrib.framework.get_or_create_global_step()
         self._build_model()
         if self.mode == 'train':
@@ -110,6 +111,29 @@ class ResNet(object):
     
     def _batch_norm(self, name, x):
         """Batch normalization."""
+        with tf.variable_scope(name):
+            params_shape = [x.get_shape()[-1]]
+
+            beta = tf.get_variable('beta', params_shape, tf.float32, initializer=tf.constant_initializer(0.0, tf.float32))
+            gamma = tf.get_variable('gamma', params_shape, tf.float32, initializer=tf.constant_initializer(1.0, tf.float32))
+
+            if self.mode == 'train':
+                mean, variance = tf.nn.moments(x, [0,1,2], name='moments')
+                moving_mean = tf.get_variable('moving_mean', params_shape, tf.float32, initializer=tf.constant_initializer(0.0, tf.float32), trainable=False)
+                moving_variance = tf.get_variable('moving_variance', params_shape, tf.float32, initializer=tf.constant_initializer(1.0, tf.float32), trainable=False)
+
+                self._extra_train_ops.append(moving_averages.assign_moving_average(moving_mean, mean, 0.9))
+                self._extra_train_ops.append(moving_averages.assign_moving_average(moving_variance, variance, 0.9))
+            else:
+                mean = tf.get_variable('moving_mean', params_shape, tf.float32, initializer=tf.constant_initializer(0.0, tf.float32), trainable=False)
+                variance = tf.get_variable('moving_variance', params_shape, tf.float32, initializer=tf.constant_initializer(0.0, tf.float32), trainable=False)
+
+                tf.summary.histogram(mean.op.name, mean)
+                tf.summary.histogram(variance.op.name, variance)
+            
+            y = tf.nn.batch_normalization(x, mean, variance, beta, gamma, 0.001)
+            y.set_shape(x.get_shape())
+            return y
     
     def _residual(self, x, in_filter, out_filter, stride, activate_before_residual=False):
         """Residual unit with 2 sub layers"""
@@ -139,10 +163,10 @@ class ResNet(object):
         tf.logging.debug('image after unit %s', x.get_shape())
         return x
     
-    def _relu(self, x):
+    def _relu(self, x, leakiness=0.0):
         """Relu"""
-        # ???
-        return tf.where(tf.less(x, 0.0), name='leaky_relu')
+        # leaky ReLU is formulated as f(x)=max(x, leakiness * x)
+        return tf.where(tf.less(x, 0.0), leakiness * x, x, name='leaky_relu')
     
     def _decay(self):
         """L2 weight decay loss."""
