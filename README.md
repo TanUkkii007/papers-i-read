@@ -9,7 +9,7 @@
 - [x] Deep Voice: Real-time Neural Text-to-Speech  https://arxiv.org/abs/1702.07825
 - [ ] Deep Voice 2: Multi-Speaker Neural Text-to-Speech http://research.baidu.com/wp-content/uploads/2017/05/Deep-Voice-2-Complete-Arxiv.pdf
 - [x] Fast Wavenet Generation Algorithm https://arxiv.org/abs/1611.09482
-- [ ] WaveNet: A Generative Model for Raw Audio https://arxiv.org/abs/1609.03499
+- [x] WaveNet: A Generative Model for Raw Audio https://arxiv.org/abs/1609.03499
 - [x] Neural Audio Synthesis of Musical Notes with WaveNet Autoencoders https://arxiv.org/abs/1704.01279
 - [x] SampleRNN: An Unconditional End-to-End Neural Audio Generation Model https://arxiv.org/abs/1612.07837
 - [x] Char2Wav: End-to-End Speech Synthesis http://www.josesotelo.com/speechsynthesis
@@ -31,7 +31,7 @@
 - [x] Deep Residual Learning for Image Recognition https://arxiv.org/abs/1512.03385
 - [ ] Batch Normalization: Accelerating Deep Network Training by Reducing Internal Covariate Shift https://arxiv.org/abs/1502.03167
 - [ ] Quasi-Recurrent Neural Networks https://arxiv.org/abs/1611.01576
-- [ ] Human-level control through deep reinforcement learning http://www.davidqiu.com:8888/research/nature14236.pdf
+- [x] Human-level control through deep reinforcement learning http://www.davidqiu.com:8888/research/nature14236.pdf
 - [ ] Learning Phrase Representations using RNN Encoder-Decoder for Statistical Machine Translation https://arxiv.org/abs/1406.1078
 - [ ] Neural Machine Translation by Jointly Learning to Align and Translate https://arxiv.org/abs/1409.0473
 - [ ] Visualizing Data using t-SNE https://lvdmaaten.github.io/publications/papers/JMLR_2008.pdf https://lvdmaaten.github.io/tsne/
