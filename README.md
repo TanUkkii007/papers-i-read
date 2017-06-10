@@ -18,6 +18,7 @@
 - [ ] Connectionist Temporal Classification: Labelling Unsegmented Sequence Data with Recurrent Neural Networks http://www.cs.toronto.edu/~graves/icml_2006.pdf
 - [ ] Voice Conversion from Unaligned Corpora using Variational Autoencoding Wasserstein Generative Adversarial Networks https://arxiv.org/abs/1704.00849
 - [ ] Deep Speaker: an End-to-End Neural Speaker Embedding System https://arxiv.org/abs/1705.02304
+- [ ] Robust speaker-adaptive hmm-based text-to-speech synthesis https://pdfs.semanticscholar.org/8434/758e69ca9674866663bf4fb4a4569e93aaed.pdf
 - [ ] Voice Conversion Using Sequence-to-Sequence Learning of Context Posterior Probabilities https://arxiv.org/abs/1704.02360
 - [ ] Sampling-based speech parameter generation using moment-matching networks https://arxiv.org/abs/1704.03626
 
@@ -30,8 +31,12 @@
 - [x] Deep Residual Learning for Image Recognition https://arxiv.org/abs/1512.03385
 - [ ] Batch Normalization: Accelerating Deep Network Training by Reducing Internal Covariate Shift https://arxiv.org/abs/1502.03167
 - [ ] Quasi-Recurrent Neural Networks https://arxiv.org/abs/1611.01576
+- [ ] Human-level control through deep reinforcement learning http://www.davidqiu.com:8888/research/nature14236.pdf
 - [ ] Learning Phrase Representations using RNN Encoder-Decoder for Statistical Machine Translation https://arxiv.org/abs/1406.1078
+- [ ] Neural Machine Translation by Jointly Learning to Align and Translate https://arxiv.org/abs/1409.0473
+- [ ] Visualizing Data using t-SNE https://lvdmaaten.github.io/publications/papers/JMLR_2008.pdf https://lvdmaaten.github.io/tsne/
 - [ ] Attention and Augmented Recurrent Neural Networks http://distill.pub/2016/augmented-rnns
+- [ ] Universal Intelligence: A Definition of Machine Intelligence https://arxiv.org/abs/0712.3329
 - [ ] Convolutional Sequence to Sequence Learning https://arxiv.org/abs/1705.03122
 - [ ] Wasserstein GAN https://arxiv.org/abs/1701.07875
 
