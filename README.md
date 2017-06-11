@@ -32,8 +32,11 @@
 - [ ] Batch Normalization: Accelerating Deep Network Training by Reducing Internal Covariate Shift https://arxiv.org/abs/1502.03167
 - [ ] Quasi-Recurrent Neural Networks https://arxiv.org/abs/1611.01576
 - [x] Human-level control through deep reinforcement learning http://www.davidqiu.com:8888/research/nature14236.pdf
+- [ ] Sequence to sequence learning with neural networks https://papers.nips.cc/paper/5346-sequence-to-sequence-learning-with-neural-networks.pdf
+- [ ] Highway Networks https://arxiv.org/abs/1505.00387
 - [ ] Learning Phrase Representations using RNN Encoder-Decoder for Statistical Machine Translation https://arxiv.org/abs/1406.1078
 - [ ] Neural Machine Translation by Jointly Learning to Align and Translate https://arxiv.org/abs/1409.0473
+- [ ] Fully Character-Level Neural Machine Translation without Explicit Segmentation https://arxiv.org/abs/1610.03017
 - [ ] A Neural Transducer https://arxiv.org/abs/1511.04868
 - [ ] Visualizing Data using t-SNE https://lvdmaaten.github.io/publications/papers/JMLR_2008.pdf https://lvdmaaten.github.io/tsne/
 - [ ] Attention and Augmented Recurrent Neural Networks http://distill.pub/2016/augmented-rnns
