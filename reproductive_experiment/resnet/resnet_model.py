@@ -60,7 +60,7 @@ class ResNet(object):
         self.global_step = tf.contrib.framework.get_or_create_global_step()
         self._build_model()
         if self.mode == 'train':
-            pass
+            self._build_train_op()
         self.summaries = tf.summary.merge_all()
     
     def _stride_arr(self, stride):
@@ -109,6 +109,9 @@ class ResNet(object):
 
             tf.summary.scalar('cost', self.cost)
     
+    def _build_train_op(self):
+        pass
+
     def _batch_norm(self, name, x):
         """Batch normalization."""
         with tf.variable_scope(name):
