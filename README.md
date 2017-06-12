@@ -7,14 +7,14 @@
 ### Speech Processing
 
 - [x] Deep Voice: Real-time Neural Text-to-Speech  https://arxiv.org/abs/1702.07825
-- [ ] Deep Voice 2: Multi-Speaker Neural Text-to-Speech http://research.baidu.com/wp-content/uploads/2017/05/Deep-Voice-2-Complete-Arxiv.pdf
+- [x] Deep Voice 2: Multi-Speaker Neural Text-to-Speech http://research.baidu.com/wp-content/uploads/2017/05/Deep-Voice-2-Complete-Arxiv.pdf
 - [x] Fast Wavenet Generation Algorithm https://arxiv.org/abs/1611.09482
 - [x] WaveNet: A Generative Model for Raw Audio https://arxiv.org/abs/1609.03499
 - [x] Neural Audio Synthesis of Musical Notes with WaveNet Autoencoders https://arxiv.org/abs/1704.01279
 - [x] SampleRNN: An Unconditional End-to-End Neural Audio Generation Model https://arxiv.org/abs/1612.07837
 - [x] Char2Wav: End-to-End Speech Synthesis http://www.josesotelo.com/speechsynthesis
 - [x] Generating Sequences With Recurrent Neural Networks https://arxiv.org/abs/1308.0850
-- [ ] Tacotron: Towards End-to-End Speech Synthesis https://arxiv.org/abs/1703.10135
+- [x] Tacotron: Towards End-to-End Speech Synthesis https://arxiv.org/abs/1703.10135
 - [ ] Connectionist Temporal Classification: Labelling Unsegmented Sequence Data with Recurrent Neural Networks http://www.cs.toronto.edu/~graves/icml_2006.pdf
 - [ ] Voice Conversion from Unaligned Corpora using Variational Autoencoding Wasserstein Generative Adversarial Networks https://arxiv.org/abs/1704.00849
 - [ ] Deep Speaker: an End-to-End Neural Speaker Embedding System https://arxiv.org/abs/1705.02304
