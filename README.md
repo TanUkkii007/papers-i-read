@@ -18,6 +18,8 @@
 - [ ] Connectionist Temporal Classification: Labelling Unsegmented Sequence Data with Recurrent Neural Networks http://www.cs.toronto.edu/~graves/icml_2006.pdf
 - [ ] Voice Conversion from Unaligned Corpora using Variational Autoencoding Wasserstein Generative Adversarial Networks https://arxiv.org/abs/1704.00849
 - [ ] Deep Speaker: an End-to-End Neural Speaker Embedding System https://arxiv.org/abs/1705.02304
+- [ ] A neural parametric singing synthesizer https://arxiv.org/abs/1704.03809
+- [ ] Lip Reading Sentences in the Wild https://arxiv.org/abs/1611.05358
 - [ ] Robust speaker-adaptive hmm-based text-to-speech synthesis https://pdfs.semanticscholar.org/8434/758e69ca9674866663bf4fb4a4569e93aaed.pdf
 - [ ] Voice Conversion Using Sequence-to-Sequence Learning of Context Posterior Probabilities https://arxiv.org/abs/1704.02360
 - [ ] Sampling-based speech parameter generation using moment-matching networks https://arxiv.org/abs/1704.03626
@@ -39,6 +41,7 @@
 - [ ] Fully Character-Level Neural Machine Translation without Explicit Segmentation https://arxiv.org/abs/1610.03017
 - [ ] A Neural Transducer https://arxiv.org/abs/1511.04868
 - [ ] Visualizing Data using t-SNE https://lvdmaaten.github.io/publications/papers/JMLR_2008.pdf https://lvdmaaten.github.io/tsne/
+- [ ] Attention Is All You Need https://arxiv.org/abs/1706.03762
 - [ ] Attention and Augmented Recurrent Neural Networks http://distill.pub/2016/augmented-rnns
 - [ ] Universal Intelligence: A Definition of Machine Intelligence https://arxiv.org/abs/0712.3329
 - [ ] Convolutional Sequence to Sequence Learning https://arxiv.org/abs/1705.03122
