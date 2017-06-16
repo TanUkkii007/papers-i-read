@@ -45,6 +45,7 @@
 - [ ] Attention and Augmented Recurrent Neural Networks http://distill.pub/2016/augmented-rnns
 - [ ] Universal Intelligence: A Definition of Machine Intelligence https://arxiv.org/abs/0712.3329
 - [ ] Convolutional Sequence to Sequence Learning https://arxiv.org/abs/1705.03122
+- [ ] Generative Adversarial Networks https://arxiv.org/abs/1406.2661
 - [ ] Wasserstein GAN https://arxiv.org/abs/1701.07875
 
 ### Distributed System
