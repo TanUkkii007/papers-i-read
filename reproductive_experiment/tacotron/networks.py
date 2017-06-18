@@ -89,7 +89,7 @@ def decode1(decoder_inputs, memory, is_training=True, scope="decoder1", reuse=No
         outputs = tf.layers.dense(dec, out_dim)
     return outputs
 
-def decode(inputs, is_training=True, scope="decoder2", reuse=None):
+def decode2(inputs, is_training=True, scope="decoder2", reuse=None):
     '''
     Args:
       inputs: A 3d tensor with shape of [N, T', C'], where C'=hp.n_mels*hp.r, 
