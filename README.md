@@ -28,6 +28,8 @@
 
 - [x] Pixel Recurrent Neural Networks https://arxiv.org/abs/1601.06759
 - [ ] Conditional Image Generation with PixelCNN Decoders https://arxiv.org/abs/1606.05328
+- [ ] PixelCNN++: Improving the PixelCNN with Discretized Logistic Mixture Likelihood and Other Modifications https://arxiv.org/abs/1701.05517
+- [ ] Fast Generation for Convolutional Autoregressive Models https://arxiv.org/abs/1704.06001
 - [ ] Parallel Multiscale Autoregressive Density Estimation https://arxiv.org/abs/1703.03664
 - [ ] Qualitatively characterizing neural network optimization problems https://arxiv.org/abs/1412.6544
 - [x] Deep Residual Learning for Image Recognition https://arxiv.org/abs/1512.03385
@@ -36,7 +38,7 @@
 - [x] Human-level control through deep reinforcement learning http://www.davidqiu.com:8888/research/nature14236.pdf
 - [ ] Sequence to sequence learning with neural networks https://papers.nips.cc/paper/5346-sequence-to-sequence-learning-with-neural-networks.pdf
 - [ ] Highway Networks https://arxiv.org/abs/1505.00387
-- [ ] Learning Phrase Representations using RNN Encoder-Decoder for Statistical Machine Translation https://arxiv.org/abs/1406.1078
+- [x] Learning Phrase Representations using RNN Encoder-Decoder for Statistical Machine Translation https://arxiv.org/abs/1406.1078
 - [ ] Neural Machine Translation by Jointly Learning to Align and Translate https://arxiv.org/abs/1409.0473
 - [ ] Fully Character-Level Neural Machine Translation without Explicit Segmentation https://arxiv.org/abs/1610.03017
 - [ ] A Neural Transducer https://arxiv.org/abs/1511.04868
@@ -46,6 +48,8 @@
 - [ ] Universal Intelligence: A Definition of Machine Intelligence https://arxiv.org/abs/0712.3329
 - [ ] Convolutional Sequence to Sequence Learning https://arxiv.org/abs/1705.03122
 - [ ] Generative Adversarial Networks https://arxiv.org/abs/1406.2661
+- [ ] Unsupervised Representation Learning with Deep Convolutional Generative Adversarial Networks https://arxiv.org/abs/1511.06434
+- [ ] Plug & Play Generative Networks: Conditional Iterative Generation of Images in Latent Space https://arxiv.org/abs/1612.00005
 - [ ] Wasserstein GAN https://arxiv.org/abs/1701.07875
 
 ### Distributed System
