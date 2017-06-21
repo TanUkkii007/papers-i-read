@@ -19,8 +19,8 @@ from hyperparams import Hyperparams as hp
 from prepro import *
 from networks import encode, decode1, decode2
 from modules import *
-# from data_load import get_batch
-# from utils import shift_by_one
+from data_load import get_batch
+from utils import shift_by_one
 from prepro import load_vocab
 
 class Graph:
