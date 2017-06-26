@@ -43,8 +43,10 @@ def embed(inputs, vocab_size, num_units, zero_pad=True, scope="embedding", reuse
 def normalize(inputs,
               type="bn",
               decay=.999,
+              epsilon=1e-8,
               is_training=True,
               activation_fn=None,
+              reuse=None,
               scope="normalize"):
     '''Applies {batch|layer} normalization.
     
@@ -80,7 +82,7 @@ def normalize(inputs,
         # pay attention to the fact that fused_batch_norm requires shape to be rank 4 of NHWC.
         if inputs_rank in [2, 3, 4]:
             pass
-        else:
+        else: # fallback to naive batch norm
             outputs = tf.contrib.layers.batch_norm(inputs,
                                                 decay=decay,
                                                 center=True,
@@ -90,16 +92,22 @@ def normalize(inputs,
                                                 is_training=is_training,
                                                 scope=scope,
                                                 fused=False)
-    elif type=="ln":
-        outputs = tf.contrib.layers.layer_norm(inputs=inputs,
-                                                center=True,
-                                                scale=True,
-                                                activation_fn=activation_fn,
-                                                scope=scope)
-    elif type=="ins":
-        pass
+    elif type in ("ln", "ins"):
+        reduction_axis = -1 if type=="ln" else 1
+        with tf.variable_scope(scope, reuse=reuse):
+            inputs_shape = inputs.get_shape()
+            params_shape = inputs_shape[-1:]
+
+            mean, variance = tf.nn.moments(inputs, [reduction_axis], keep_dims=True)
+            beta = tf.Variable(tf.zeros(params_shape))
+            gamma = tf.Variable(tf.ones(params_shape))
+            normalized = (inputs - mean) / ((variance + epsilon) ** (.5))
+            outputs = gamma * normalized + beta
     else:
-        raise ValueError("Currently we support `bn` or `ln` only.")
+        outputs = inputs
+
+    if activation_fn:
+        outputs = activation_fn(outputs)
     
     return outputs
 
@@ -256,7 +264,7 @@ def highwaynet(inputs, num_units=None, scope="highwaynet", reuse=None):
     
     with tf.variable_scope(scope, reuse=reuse):
         H = tf.layers.dense(inputs, units=num_units, activation=tf.nn.relu, name="dense1")
-        T = tf.laysers.dense(inputs, units=num_units, activation=tf.nn.sigmoid, name="dense2")
+        T = tf.layers.dense(inputs, units=num_units, activation=tf.nn.sigmoid, name="dense2")
         C = 1. - T
         outputs = H * T + inputs * C
     return outputs

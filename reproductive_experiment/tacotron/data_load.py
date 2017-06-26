@@ -163,8 +163,8 @@ def get_batch():
 
         # Decode sound file
         x, y, z = get_text_and_spectrograms(
-            _inputs=[text, sound_file],
-            dtypes=[tf.int32, tf.float32],
+            inputs=[text, sound_file],
+            dtypes=[tf.int32, tf.float32, tf.float32],
             capacity=128,
             num_threads=32)
 
