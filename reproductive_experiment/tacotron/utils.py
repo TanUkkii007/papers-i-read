@@ -87,3 +87,30 @@ def reduce_frames(array, step, r):
             reshaped = np.vstack((reshaped, np.hstack(sliced[i:i + r])))
 
     return reshaped
+
+
+def restore_shape(array, step, r):
+    '''Reduces and adjust the shape and content of `arry` according to r.
+    
+    Args:
+      arry: A 2d array with shape of [T, C]
+      step: An int. Overlapping span.
+      r: Reduction factor
+     
+    Returns:
+      A 2d array with shape of [-1, C*r]
+    '''
+    T, C = array.shape
+    sliced = np.split(array, list(range(step, T, step)), axis=0)
+
+    started = False
+    for s in sliced:
+        if not started:
+            restored = np.vstack(np.split(s, r, axis=1))
+            started = True
+        else:
+            restored = np.vstack((restored, np.vstack(np.split(s, r, axis=1))))
+    
+    # Trim zero paddings
+    restored = restored[:np.count_nonzero(restored.sum(axis=1))]
+    return restored
