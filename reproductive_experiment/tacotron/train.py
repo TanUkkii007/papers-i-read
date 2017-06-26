@@ -12,6 +12,7 @@ from __future__ import print_function
 import tensorflow as tf
 import numpy as np
 import librosa
+from tqdm import tqdm
 
 import os
 
@@ -85,7 +86,7 @@ def main():
         with sv.managed_session() as sess:
             for epoch in range(1, hp.num_epochs+1):
                 if sv.should_stop(): break
-                for step in range(g.num_batch):
+                for step in tqdm(range(g.num_batch), total=g.num_batch, ncols=70, leave=False, unit='b'):
                     sess.run(g.train_op)
                 
                 # Write checkpoint files at every epoch
