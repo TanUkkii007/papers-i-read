@@ -51,7 +51,7 @@ class Graph:
                     self.loss2 = tf.abs(self.outputs2 - self.z)
                 else: # L2 loss
                     self.loss1 = tf.squared_difference(self.outputs1, self.y)
-                    self.loss2 = tf.squared_difference(self.outputs2, self.y)
+                    self.loss2 = tf.squared_difference(self.outputs2, self.z)
                 
                 # Target masking
                 if hp.target_zeros_masking:
