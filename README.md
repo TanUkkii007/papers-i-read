@@ -51,6 +51,8 @@
 - [ ] Unsupervised Representation Learning with Deep Convolutional Generative Adversarial Networks https://arxiv.org/abs/1511.06434
 - [ ] Plug & Play Generative Networks: Conditional Iterative Generation of Images in Latent Space https://arxiv.org/abs/1612.00005
 - [ ] Wasserstein GAN https://arxiv.org/abs/1701.07875
+- [ ] One Model To Learn Them All https://arxiv.org/abs/1706.05137
+- [ ] Google's Multilingual Neural Machine Translation System: Enabling Zero-Shot Translation https://arxiv.org/abs/1611.04558
 
 ### Distributed System
 
