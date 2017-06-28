@@ -89,6 +89,27 @@ def reduce_frames(array, step, r):
     return reshaped
 
 
+def spectrogram2wav(spectrogram):
+    '''
+    spectrogram: [t, f], i.e. [t, nfft // 2 + 1]
+    '''
+    spectrogram = spectrogram.T # [f, t]
+    X_best = copy.deepcopy(spectrogram)
+    for i in range(hp.n_iter):
+        X_t = invert_spectrogram(X_best)
+        est = librosa.stft(X_t, hp.n_fft, hp.hop_length, win_length=hp.win_length) # [f, t]
+        phase = est / np.maximum(1e-8, np.abs(est)) # [f, t]
+        X_best = spectrogram * phase # [f, t]
+    X_t = invert_spectrogram(X_best)
+
+    return np.real(X_t)
+
+def invert_spectrogram(spectrogram):
+    '''
+    spectrogram: [f, t]
+    '''
+    return librosa.istft(spectrogram, hp.hop_length, win_length=hp.win_length, window='hann')
+
 def restore_shape(array, step, r):
     '''Reduces and adjust the shape and content of `arry` according to r.
     
