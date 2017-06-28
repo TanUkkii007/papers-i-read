@@ -23,6 +23,7 @@
 - [ ] Robust speaker-adaptive hmm-based text-to-speech synthesis https://pdfs.semanticscholar.org/8434/758e69ca9674866663bf4fb4a4569e93aaed.pdf
 - [ ] Voice Conversion Using Sequence-to-Sequence Learning of Context Posterior Probabilities https://arxiv.org/abs/1704.02360
 - [ ] Sampling-based speech parameter generation using moment-matching networks https://arxiv.org/abs/1704.03626
+- [ ] Multi-Language Multi-Speaker Acoustic Modeling for LSTM-RNN based Statistical Parametric Speech Synthesis https://research.google.com/pubs/pub45400.html
 
 ### Machine Learning
 
@@ -53,6 +54,8 @@
 - [ ] Wasserstein GAN https://arxiv.org/abs/1701.07875
 - [ ] One Model To Learn Them All https://arxiv.org/abs/1706.05137
 - [ ] Google's Multilingual Neural Machine Translation System: Enabling Zero-Shot Translation https://arxiv.org/abs/1611.04558
+- [ ] A Unified Architecture for Natural Language Processing:
+Deep Neural Networks with Multitask Learning https://ronan.collobert.com/pub/matos/2008_nlp_icml.pdf
 
 ### Distributed System
 
