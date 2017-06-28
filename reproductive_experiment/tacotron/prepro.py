@@ -50,7 +50,7 @@ def load_train_data():
     if hp.sanity_check: # We use a single mini-batch for training to overfit it.
         texts, sound_files = texts[:hp.batch_size]*1000, sound_files[:hp.batch_size]*1000
     else:
-        texts, sound_files = texts[:-hp.num_samples], sound_files[:-hp.batch_size]
+        texts, sound_files = texts[:-hp.num_samples], sound_files[:-hp.num_samples]
     return texts, sound_files
 
 

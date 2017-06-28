@@ -37,10 +37,6 @@ def producer_func(func):
             capacity: Queue capacity. Default is 32.
             num_threads: Number of threads. Default is 1.
         """
-        # create place holder list
-        placeholders = []
-        for dtype in dtypes:
-            placeholders.append(tf.placeholder(dtype=dtype))
 
         # enqueue function
         def enqueue_func(sess, op):
@@ -52,6 +48,11 @@ def producer_func(func):
                 feed_dict[ph] = col
             # run session
             sess.run(op, feed_dict=feed_dict)
+        
+        # create place holder list
+        placeholders = []
+        for dtype in dtypes:
+            placeholders.append(tf.placeholder(dtype=dtype))
 
         # create FIFO queue
         queue = tf.FIFOQueue(capacity, dtypes=dtypes)
@@ -63,6 +64,9 @@ def producer_func(func):
         runner = _FuncQueueRunner(enqueue_func, queue,
                                   [enqueue_op] * num_threads)
 
+        # register to global collection
+        tf.train.add_queue_runner(runner)
+        
         # return de-queue operation
         return queue.dequeue()
 
