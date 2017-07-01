@@ -56,6 +56,7 @@
 - [ ] Google's Multilingual Neural Machine Translation System: Enabling Zero-Shot Translation https://arxiv.org/abs/1611.04558
 - [ ] A Unified Architecture for Natural Language Processing:
 Deep Neural Networks with Multitask Learning https://ronan.collobert.com/pub/matos/2008_nlp_icml.pdf
+- [ ] Semantically Conditioned LSTM-based Natural Language Generation for Spoken Dialogue Systems https://arxiv.org/abs/1508.01745
 
 ### Distributed System
 
