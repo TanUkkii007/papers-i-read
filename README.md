@@ -23,7 +23,7 @@
 - [ ] Robust speaker-adaptive hmm-based text-to-speech synthesis https://pdfs.semanticscholar.org/8434/758e69ca9674866663bf4fb4a4569e93aaed.pdf
 - [ ] Voice Conversion Using Sequence-to-Sequence Learning of Context Posterior Probabilities https://arxiv.org/abs/1704.02360
 - [ ] Sampling-based speech parameter generation using moment-matching networks https://arxiv.org/abs/1704.03626
-- [ ] Multi-Language Multi-Speaker Acoustic Modeling for LSTM-RNN based Statistical Parametric Speech Synthesis https://research.google.com/pubs/pub45400.html
+- [x] Multi-Language Multi-Speaker Acoustic Modeling for LSTM-RNN based Statistical Parametric Speech Synthesis https://research.google.com/pubs/pub45400.html
 
 ### Machine Learning
 
@@ -40,7 +40,7 @@
 - [ ] Sequence to sequence learning with neural networks https://papers.nips.cc/paper/5346-sequence-to-sequence-learning-with-neural-networks.pdf
 - [ ] Highway Networks https://arxiv.org/abs/1505.00387
 - [x] Learning Phrase Representations using RNN Encoder-Decoder for Statistical Machine Translation https://arxiv.org/abs/1406.1078
-- [ ] Neural Machine Translation by Jointly Learning to Align and Translate https://arxiv.org/abs/1409.0473
+- [x] Neural Machine Translation by Jointly Learning to Align and Translate https://arxiv.org/abs/1409.0473
 - [ ] Fully Character-Level Neural Machine Translation without Explicit Segmentation https://arxiv.org/abs/1610.03017
 - [ ] A Neural Transducer https://arxiv.org/abs/1511.04868
 - [ ] Visualizing Data using t-SNE https://lvdmaaten.github.io/publications/papers/JMLR_2008.pdf https://lvdmaaten.github.io/tsne/
@@ -54,9 +54,10 @@
 - [ ] Wasserstein GAN https://arxiv.org/abs/1701.07875
 - [ ] One Model To Learn Them All https://arxiv.org/abs/1706.05137
 - [ ] Google's Multilingual Neural Machine Translation System: Enabling Zero-Shot Translation https://arxiv.org/abs/1611.04558
-- [ ] A Unified Architecture for Natural Language Processing:
+- [x] A Unified Architecture for Natural Language Processing:
 Deep Neural Networks with Multitask Learning https://ronan.collobert.com/pub/matos/2008_nlp_icml.pdf
 - [ ] Semantically Conditioned LSTM-based Natural Language Generation for Spoken Dialogue Systems https://arxiv.org/abs/1508.01745
+- [ ] Methods for Interpreting and Understanding Deep Neural Networks https://arxiv.org/abs/1706.07979
 
 ### Distributed System
 
