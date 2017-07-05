@@ -41,7 +41,6 @@
 - [ ] Highway Networks https://arxiv.org/abs/1505.00387
 - [x] Learning Phrase Representations using RNN Encoder-Decoder for Statistical Machine Translation https://arxiv.org/abs/1406.1078
 - [x] Neural Machine Translation by Jointly Learning to Align and Translate https://arxiv.org/abs/1409.0473
-- [ ] Fully Character-Level Neural Machine Translation without Explicit Segmentation https://arxiv.org/abs/1610.03017
 - [ ] A Neural Transducer https://arxiv.org/abs/1511.04868
 - [ ] Visualizing Data using t-SNE https://lvdmaaten.github.io/publications/papers/JMLR_2008.pdf https://lvdmaaten.github.io/tsne/
 - [ ] Attention Is All You Need https://arxiv.org/abs/1706.03762
@@ -54,10 +53,22 @@
 - [ ] Wasserstein GAN https://arxiv.org/abs/1701.07875
 - [ ] One Model To Learn Them All https://arxiv.org/abs/1706.05137
 - [ ] Google's Multilingual Neural Machine Translation System: Enabling Zero-Shot Translation https://arxiv.org/abs/1611.04558
+- [ ] Google's Neural Machine Translation System: Bridging the Gap between Human and Machine Translation https://arxiv.org/abs/1609.08144
 - [x] A Unified Architecture for Natural Language Processing:
 Deep Neural Networks with Multitask Learning https://ronan.collobert.com/pub/matos/2008_nlp_icml.pdf
 - [ ] Semantically Conditioned LSTM-based Natural Language Generation for Spoken Dialogue Systems https://arxiv.org/abs/1508.01745
 - [ ] Methods for Interpreting and Understanding Deep Neural Networks https://arxiv.org/abs/1706.07979
+- [ ] Scheduled Sampling for Sequence Prediction with Recurrent Neural Networks https://arxiv.org/abs/1506.03099
+- [ ] End-to-end Continuous Speech Recognition using Attention-based Recurrent NN: First Results https://arxiv.org/abs/1412.1602
+- [ ] Attention-Based Models for Speech Recognition https://arxiv.org/abs/1506.07503
+- [ ] Listen, Attend and Spell https://arxiv.org/abs/1508.01211
+- [ ] Multi-task Sequence to Sequence Learning https://arxiv.org/abs/1511.06114
+- [ ] Multi-Source Neural Translation https://arxiv.org/abs/1601.00710
+- [ ] Multi-way, multilingual neural machine translation with a shared attention mechanism https://arxiv.org/abs/1601.01073
+- [ ] Fully Character-Level Neural Machine Translation without Explicit Segmentation https://arxiv.org/abs/1610.03017
+- [ ] Multilingual Language Processing From Bytes https://arxiv.org/abs/1512.00103
+- [ ] Polyglot Neural Language Models: A Case Study in Cross-Lingual Phonetic Representation Learning https://arxiv.org/abs/1605.03832
+
 
 ### Distributed System
 
