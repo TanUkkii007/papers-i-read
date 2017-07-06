@@ -68,6 +68,7 @@ Deep Neural Networks with Multitask Learning https://ronan.collobert.com/pub/mat
 - [ ] Fully Character-Level Neural Machine Translation without Explicit Segmentation https://arxiv.org/abs/1610.03017
 - [ ] Multilingual Language Processing From Bytes https://arxiv.org/abs/1512.00103
 - [ ] Polyglot Neural Language Models: A Case Study in Cross-Lingual Phonetic Representation Learning https://arxiv.org/abs/1605.03832
+- [ ] Effective Approaches to Attention-based Neural Machine Translation https://arxiv.org/abs/1508.04025
 
 
 ### Distributed System
