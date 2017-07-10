@@ -24,6 +24,7 @@
 - [ ] Voice Conversion Using Sequence-to-Sequence Learning of Context Posterior Probabilities https://arxiv.org/abs/1704.02360
 - [ ] Sampling-based speech parameter generation using moment-matching networks https://arxiv.org/abs/1704.03626
 - [x] Multi-Language Multi-Speaker Acoustic Modeling for LSTM-RNN based Statistical Parametric Speech Synthesis https://research.google.com/pubs/pub45400.html
+- [ ] Sequence-to-Sequence Neural Net Models for Grapheme-to-Phoneme Conversion https://arxiv.org/abs/1506.00196
 
 ### Machine Learning
 
@@ -69,6 +70,8 @@ Deep Neural Networks with Multitask Learning https://ronan.collobert.com/pub/mat
 - [ ] Multilingual Language Processing From Bytes https://arxiv.org/abs/1512.00103
 - [ ] Polyglot Neural Language Models: A Case Study in Cross-Lingual Phonetic Representation Learning https://arxiv.org/abs/1605.03832
 - [ ] Effective Approaches to Attention-based Neural Machine Translation https://arxiv.org/abs/1508.04025
+- [ ] Character-Aware Neural Language Models https://arxiv.org/abs/1508.06615
+- [ ] Finding Function in Form: Compositional Character Models for Open Vocabulary Word Representation https://arxiv.org/abs/1508.02096
 
 
 ### Distributed System
