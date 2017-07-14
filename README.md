@@ -72,6 +72,7 @@ Deep Neural Networks with Multitask Learning https://ronan.collobert.com/pub/mat
 - [ ] Effective Approaches to Attention-based Neural Machine Translation https://arxiv.org/abs/1508.04025
 - [ ] Character-Aware Neural Language Models https://arxiv.org/abs/1508.06615
 - [ ] Finding Function in Form: Compositional Character Models for Open Vocabulary Word Representation https://arxiv.org/abs/1508.02096
+- [ ] Meta-Learning with Temporal Convolutions https://arxiv.org/abs/1707.03141
 
 
 ### Distributed System
