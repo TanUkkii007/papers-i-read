@@ -33,7 +33,6 @@
 ### Machine Learning
 
 - [x] Pixel Recurrent Neural Networks https://arxiv.org/abs/1601.06759
-- [ ] Conditional Image Generation with PixelCNN Decoders https://arxiv.org/abs/1606.05328
 - [ ] PixelCNN++: Improving the PixelCNN with Discretized Logistic Mixture Likelihood and Other Modifications https://arxiv.org/abs/1701.05517
 - [ ] Fast Generation for Convolutional Autoregressive Models https://arxiv.org/abs/1704.06001
 - [ ] Parallel Multiscale Autoregressive Density Estimation https://arxiv.org/abs/1703.03664
@@ -73,6 +72,7 @@ Deep Neural Networks with Multitask Learning https://ronan.collobert.com/pub/mat
 
 #### ready to summarize
 
+- [ ] Conditional Image Generation with PixelCNN Decoders https://arxiv.org/abs/1606.05328
 - [ ] Generative Adversarial Networks https://arxiv.org/abs/1406.2661
 - [ ] Sequence to sequence learning with neural networks https://papers.nips.cc/paper/5346-sequence-to-sequence-learning-with-neural-networks.pdf
 - [ ] Highway Networks https://arxiv.org/abs/1505.00387
