@@ -28,6 +28,7 @@
 - [ ] A neural parametric singing synthesizer https://arxiv.org/abs/1704.03809
 - [ ] Lip Reading Sentences in the Wild https://arxiv.org/abs/1611.05358
 - [ ] Sequence-to-Sequence Neural Net Models for Grapheme-to-Phoneme Conversion https://arxiv.org/abs/1506.00196
+- [ ] Listening while Speaking: Speech Chain by Deep Learning https://arxiv.org/abs/1707.04879v1
 
 
 ### Machine Learning
@@ -69,6 +70,7 @@ Deep Neural Networks with Multitask Learning https://ronan.collobert.com/pub/mat
 - [ ] Character-Aware Neural Language Models https://arxiv.org/abs/1508.06615
 - [ ] Finding Function in Form: Compositional Character Models for Open Vocabulary Word Representation https://arxiv.org/abs/1508.02096
 - [ ] Meta-Learning with Temporal Convolutions https://arxiv.org/abs/1707.03141
+- [ ] Dual Learning for Machine Translation https://arxiv.org/abs/1611.00179
 
 #### ready to summarize
 
