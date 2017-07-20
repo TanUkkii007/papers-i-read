@@ -220,6 +220,58 @@ class WaveNetModel(object):
 
         return skip_contribution, input_batch + transformed
 
+    def _one_hot(self, input_batch):
+        '''One-hot encodes the waveform amplitudes.
+        This allows the definition of the network as a categorical distribution
+        over a finite set of possible amplitudes.
+        '''
+        with tf.name_scope('one_hot_encode'):
+            encoded = tf.one_hot(
+                input_batch,
+                depth=self.quantization_channels,
+                dtype=tf.float32)
+            shape = [self.batch_size, -1, self.quantization_channels]
+            encoded = tf.reshape(encoded, shape)
+        return encoded
+
+    def _embed_gc(self, global_condition):
+        '''Returns embedding for global condition.
+        :param global_condition: Either ID of global condition for
+               tf.nn.embedding_lookup or actual embedding. The latter is
+               experimental.
+        :return: Embedding or None
+        '''
+        embedding = None
+        if self.global_condition_cardinality is not None:
+            # Only lookup the embedding if the global condition is presented
+            # as an integer of mutually-exclusive categories ...
+            embedding_table = self.variables['embeddings']['gc_embedding']
+            embedding = tf.nn.embedding_lookup(embedding_table,
+                                               global_condition)
+
+        elif global_condition is not None:
+            # ... else the global_condition (if any) is already provided
+            # as an embedding.
+
+            # In this case, the number of global_embedding channels must be
+            # equal to the the last dimension of the global_condition tensor.
+            gc_batch_rank = len(global_condition.get_shape())
+            dims_match = (global_condition.get_shape()[gc_batch_rank - 1] ==
+                          self.global_condition_channels)
+            if not dims_match:
+                raise ValueError('Shape of global_condition {} does not'
+                                 ' match global_condition_channels {}.'.format(
+                                     global_condition.get_shape(),
+                                     self.global_condition_channels))
+            embedding = global_condition
+
+        if embedding is not None:
+            embedding = tf.reshape(embedding, [
+                self.batch_size, 1, self.global_condition_channels
+            ])
+
+        return embedding
+
     def loss(self,
              input_batch,
              global_condition_batch=None,
@@ -230,4 +282,18 @@ class WaveNetModel(object):
         '''
         with tf.name_scope(name):
             # We mu-law encode and quantize the input audioform.
-            encoded_input = mu_law_encode(input_batch, self.quantization_channels)
+            encoded_input = mu_law_encode(input_batch,
+                                          self.quantization_channels)
+
+            gc_embedding = self._embed_gc(global_condition_batch)
+            encoded = self._one_hot(encoded_input)
+            if self.scalar_input:
+                network_input = tf.reshape(
+                    tf.cast(input_batch, tf.float32), [self.batch_size, -1, 1])
+            else:
+                network_input = encoded
+
+            # Cut off the last sample of network input to preserve causality.
+            network_input_width = tf.shape(network_input)[1] - 1
+            network_input = tf.slice(network_input, [0, 0, 0],
+                                     [-1, network_input_width, -1])
