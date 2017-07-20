@@ -27,7 +27,7 @@ SOFTWARE.
 import numpy as np
 import tensorflow as tf
 
-from ops import causal_conv
+from ops import causal_conv, mu_law_encode
 
 
 class WaveNetModel(object):
@@ -228,4 +228,6 @@ class WaveNetModel(object):
         '''Creates a WaveNet network and returns the autoencoding loss.
         The variables are all scoped to the given name.
         '''
-        pass
+        with tf.name_scope(name):
+            # We mu-law encode and quantize the input audioform.
+            encoded_input = mu_law_encode(input_batch, self.quantization_channels)
