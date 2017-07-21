@@ -66,7 +66,6 @@ Deep Neural Networks with Multitask Learning https://ronan.collobert.com/pub/mat
 - [ ] Multi-task Sequence to Sequence Learning https://arxiv.org/abs/1511.06114
 - [ ] Multi-way, multilingual neural machine translation with a shared attention mechanism https://arxiv.org/abs/1601.01073
 - [ ] Multilingual Language Processing From Bytes https://arxiv.org/abs/1512.00103
-- [ ] Effective Approaches to Attention-based Neural Machine Translation https://arxiv.org/abs/1508.04025
 - [ ] Character-Aware Neural Language Models https://arxiv.org/abs/1508.06615
 - [ ] Finding Function in Form: Compositional Character Models for Open Vocabulary Word Representation https://arxiv.org/abs/1508.02096
 - [ ] Meta-Learning with Temporal Convolutions https://arxiv.org/abs/1707.03141
@@ -82,6 +81,7 @@ Deep Neural Networks with Multitask Learning https://ronan.collobert.com/pub/mat
 - [ ] Multi-Source Neural Translation https://arxiv.org/abs/1601.00710
 - [ ] Fully Character-Level Neural Machine Translation without Explicit Segmentation https://arxiv.org/abs/1610.03017
 - [ ] Polyglot Neural Language Models: A Case Study in Cross-Lingual Phonetic Representation Learning https://arxiv.org/abs/1605.03832
+- [ ] Effective Approaches to Attention-based Neural Machine Translation https://arxiv.org/abs/1508.04025
 
 
 ### Distributed System
