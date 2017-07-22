@@ -220,6 +220,60 @@ class WaveNetModel(object):
 
         return skip_contribution, input_batch + transformed
 
+    def _create_network(self, input_batch, global_condition_batch):
+        '''Construct the WaveNet network.'''
+        outputs = []
+        current_layer = input_batch
+
+        # Pre-process the input with a regular convolution
+        if self.scalar_input:
+            initial_channels = 1
+        else:
+            initial_channels = self.quantization_channels
+
+        current_layer = self._create_causal_layer(current_layer)
+
+        output_width = tf.shape(input_batch)[1] - self.receptive_field + 1
+
+        # Add all defined dilation layers.
+        with tf.name_scope('dilated_stack'):
+            for layer_index, dilation in enumerate(self.dilations):
+                with tf.name_scope('layer{}'.fromat(layer_index)):
+                    output, current_layer = self._create_dilation_layer(
+                        current_layer, layer_index, dilation,
+                        global_condition_batch, output_width)
+                    outputs.append(output)
+
+        with tf.name_scope('postprocessing'):
+            # Perform (+) -> ReLU -> 1x1 conv -> ReLU -> 1x1 conv to
+            # postprocess the output.
+            w1 = self.variables['postprocessing']['postprocess1']
+            w2 = self.variables['postprocessing']['postprocess2']
+            if self.use_biases:
+                b1 = self.variables['postprocessing']['postprocess1_bias']
+                b2 = self.variables['postprocessing']['postprocess2_bias']
+
+            if self.histograms:
+                tf.summary.histogram('postprocess1_weights', w1)
+                tf.summary.histogram('postprocess2_weights', w2)
+                if self.use_biases:
+                    tf.summary.histogram('postprocess1_biases', b1)
+                    tf.summary.histogram('postprocess1_biases', b2)
+
+            # We skip connections from the outputs of each layer, adding them
+            # all up here.
+            total = sum(outputs)
+            transformed1 = tf.nn.relu(total)
+            conv1 = tf.nn.conv1d(transformed1, w1, stride=1, padding="SAME")
+            if self.use_biases:
+                conv1 = tf.add(conv1, b1)
+            transformed2 = tf.nn.relu(conv1)
+            conv2 = tf.nn.conv1d(transformed2, w2, stride=1, padding="SAME")
+            if self.use_biases:
+                conv2 = tf.add(conv2, b2)
+
+        return conv2
+
     def _one_hot(self, input_batch):
         '''One-hot encodes the waveform amplitudes.
         This allows the definition of the network as a categorical distribution
@@ -297,3 +351,5 @@ class WaveNetModel(object):
             network_input_width = tf.shape(network_input)[1] - 1
             network_input = tf.slice(network_input, [0, 0, 0],
                                      [-1, network_input_width, -1])
+
+            raw_output = self._create_network(encoded, gc_embedding)
