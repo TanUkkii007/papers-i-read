@@ -17,11 +17,12 @@
 - [x] Tacotron: Towards End-to-End Speech Synthesis https://arxiv.org/abs/1703.10135
 - [ ] Connectionist Temporal Classification: Labelling Unsegmented Sequence Data with Recurrent Neural Networks http://www.cs.toronto.edu/~graves/icml_2006.pdf
 - [ ] Voice Conversion from Unaligned Corpora using Variational Autoencoding Wasserstein Generative Adversarial Networks https://arxiv.org/abs/1704.00849
-- [ ] Deep Speaker: an End-to-End Neural Speaker Embedding System https://arxiv.org/abs/1705.02304
 - [ ] Robust speaker-adaptive hmm-based text-to-speech synthesis https://pdfs.semanticscholar.org/8434/758e69ca9674866663bf4fb4a4569e93aaed.pdf
 - [ ] Voice Conversion Using Sequence-to-Sequence Learning of Context Posterior Probabilities https://arxiv.org/abs/1704.02360
 - [ ] Sampling-based speech parameter generation using moment-matching networks https://arxiv.org/abs/1704.03626
 - [x] Multi-Language Multi-Speaker Acoustic Modeling for LSTM-RNN based Statistical Parametric Speech Synthesis https://research.google.com/pubs/pub45400.html
+- [ ] Deep Neural Network-Based Speaker Embeddings for End-To-End Speaker Verification http://danielpovey.com/files/2016_slt_xvector.pdf
+- [ ] End-to-end text-dependent speaker verification https://research.google.com/pubs/pub44681.html
 
 #### ready to summarize
 
@@ -29,6 +30,7 @@
 - [ ] Lip Reading Sentences in the Wild https://arxiv.org/abs/1611.05358
 - [ ] Sequence-to-Sequence Neural Net Models for Grapheme-to-Phoneme Conversion https://arxiv.org/abs/1506.00196
 - [ ] Listening while Speaking: Speech Chain by Deep Learning https://arxiv.org/abs/1707.04879v1
+- [ ] Deep Speaker: an End-to-End Neural Speaker Embedding System https://arxiv.org/abs/1705.02304
 
 
 ### Machine Learning
@@ -70,6 +72,7 @@ Deep Neural Networks with Multitask Learning https://ronan.collobert.com/pub/mat
 - [ ] Finding Function in Form: Compositional Character Models for Open Vocabulary Word Representation https://arxiv.org/abs/1508.02096
 - [ ] Meta-Learning with Temporal Convolutions https://arxiv.org/abs/1707.03141
 - [ ] Dual Learning for Machine Translation https://arxiv.org/abs/1611.00179
+- [ ] FaceNet: A Unified Embedding for Face Recognition and Clustering https://arxiv.org/abs/1503.03832
 
 #### ready to summarize
 
