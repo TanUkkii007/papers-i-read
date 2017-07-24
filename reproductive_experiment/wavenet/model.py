@@ -353,3 +353,38 @@ class WaveNetModel(object):
                                      [-1, network_input_width, -1])
 
             raw_output = self._create_network(encoded, gc_embedding)
+
+            with tf.name_scope('loss'):
+                # Cut off the samples corresponding to the receptive field
+                # for the first predicted sample.
+                target_output = tf.slice(
+                    tf.reshape(encoded, [
+                        self.batch_size, -1, self.quantization_channels
+                    ]), [0, self.receptive_field, 0], [-1, -1, -1])
+                target_output = tf.reshape(target_output,
+                                           [-1, self.quantization_channels])
+                prediction = tf.reshape(raw_output,
+                                        [-1, self.quantization_channels])
+                loss = tf.nn.softmax_cross_entropy_with_logits(
+                    logits=prediction, labels=target_output)
+                reduced_loss = tf.reduce_mean(loss)
+
+                tf.summary.scalar('loss', reduced_loss)
+
+                if l2_regularization_strength is None:
+                    return reduced_loss
+                else:
+                    # L2 regularization for all trainable parameters
+                    l2_loss = tf.add_n([
+                        tf.nn.l2_loss(v) for v in tf.trainable_variables()
+                        if not ('bias' in v.name)
+                    ])
+
+                # Add the regularization term to the loss
+                total_loss = (
+                    reduced_loss + l2_regularization_strength * l2_loss)
+
+                tf.summary.scalar('l2_loss', l2_loss)
+                tf.summary.scalar('total_loss', total_loss)
+
+                return total_loss
