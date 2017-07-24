@@ -39,6 +39,7 @@ import tensorflow as tf
 from tensorflow.python.client import timeline
 
 from model import WaveNetModel
+from audio_reader import AudioReader
 
 BATCH_SIZE = 1
 DATA_DIRECTORY = './VCTK-Corpus'
@@ -254,3 +255,20 @@ def main():
     coord = tf.train.Coordinator()
 
     # Load raw waveform from VCTK corpus.
+    with tf.name_scope('create_inputs'):
+        # Allow silence trimming to be skipped by specifying a threshold near
+        # zero.
+        silence_threshold = args.silence_threshold if args.silence_threshold > EPSILON else None
+
+        gc_enabled = args.gc_channels is not None
+        reader = AudioReader(
+            args.data_dir,
+            coord,
+            sample_rate=wavenet_params['sample_rate'],
+            gc_enabled=gc_enabled,
+            receptive_field=WaveNetModel.calculate_receptive_field(
+                wavenet_params['filter_width'], wavenet_params['dilations'],
+                wavenet_params['scalar_input'],
+                wavenet_params['initial_filter_width']),
+            sample_size=args.sample_size,
+            silence_threshold=silence_threshold)
