@@ -272,3 +272,8 @@ def main():
                 wavenet_params['initial_filter_width']),
             sample_size=args.sample_size,
             silence_threshold=silence_threshold)
+        audio_batch = reader.dequeue(args.batch_size)
+        if gc_enabled:
+            gc_id_batch = reader.dequeue_gc(args.batch_size)
+        else:
+            gc_id_batch = None
