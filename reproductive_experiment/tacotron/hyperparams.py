@@ -48,6 +48,8 @@ class Hyperparams:
     num_epochs = 10000 if not sanity_check else 40 # Paper => 2M global steps!
     loss_type = "l2" # Or you can test "l1"
     num_samples = 32
+    decay_step = 32
+    decay_rate=0.96
 
     # etc
     num_gpus = 1 # If you have multiple gpus, adjust this option, and increase the batch size
