@@ -15,8 +15,11 @@ class Hyperparams:
     sanity_check = True
 
     # data
-    text_file = 'WEB/text.csv'
-    sound_fpath = 'WEB'
+    data_set = 'atr503' # 'bible', 'atr503'
+    bible_text_file = 'WEB/text.csv'
+    bible_sound_fpath = 'WEB'
+    atr503_text_file = 'atr503/source.csv'
+    atr503_sound_fpath = 'atr503/wav'
     max_len = 100 if not sanity_check else 30 # maximum length of text
     min_len = 10 if not sanity_check else 20
 
@@ -42,8 +45,8 @@ class Hyperparams:
 
     # training scheme
     lr = 0.0005 # Paper => Exponential decay
-    logdir = "logdir" if not sanity_check else "logdir_s"
-    outputdir = 'samples' if not sanity_check else "samples_s"
+    logdir = "logdir_" + data_set if not sanity_check else "logdir_s_" + data_set
+    outputdir = 'samples_' + data_set if not sanity_check else "samples_s_" + data_set
     batch_size = 32
     num_epochs = 10000 if not sanity_check else 40 # Paper => 2M global steps!
     loss_type = "l2" # Or you can test "l1"
