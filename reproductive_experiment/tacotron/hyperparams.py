@@ -19,8 +19,8 @@ class Hyperparams:
     bible_text_file = 'WEB/text.csv'
     bible_sound_fpath = 'WEB'
     atr503_text_file = 'atr503/source.csv'
-    atr503_sound_fpath = 'atr503/wav'
-    max_len = 100 if not sanity_check else 30 # maximum length of text
+    atr503_sound_fpath = 'atr503/wav_22050'
+    max_len = 100 if not sanity_check else 40 # maximum length of text
     min_len = 10 if not sanity_check else 20
 
     # signal processing
