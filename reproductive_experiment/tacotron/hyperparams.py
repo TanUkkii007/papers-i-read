@@ -20,7 +20,7 @@ class Hyperparams:
     bible_sound_fpath = 'WEB'
     atr503_text_file = 'atr503/source.csv'
     atr503_sound_fpath = 'atr503/wav_22050'
-    max_len = 100 if not sanity_check else 40 # maximum length of text
+    max_len = 100 if not sanity_check else 30 # maximum length of text
     min_len = 10 if not sanity_check else 20
 
     # signal processing
@@ -51,7 +51,7 @@ class Hyperparams:
     num_epochs = 10000 if not sanity_check else 40 # Paper => 2M global steps!
     loss_type = "l2" # Or you can test "l1"
     num_samples = 32
-    decay_step = 32
+    decay_step = 500
     decay_rate=0.96
 
     # etc
