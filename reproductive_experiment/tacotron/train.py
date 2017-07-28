@@ -77,7 +77,7 @@ class Graph:
                     global_step=self.global_step,
                     decay_steps=hp.decay_step,
                     decay_rate=hp.decay_rate,
-                    staircase=True)
+                    staircase=False)
                 self.optimizer = tf.train.AdamOptimizer(
                     learning_rate=learning_rate)
                 self.train_op = self.optimizer.minimize(
