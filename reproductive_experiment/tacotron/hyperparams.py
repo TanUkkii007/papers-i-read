@@ -15,7 +15,7 @@ class Hyperparams:
     sanity_check = True
 
     # data
-    data_set = 'atr503' # 'bible', 'atr503', 'siwis'
+    data_set = 'siwis' # 'bible', 'atr503', 'siwis'
     bible_text_file = 'WEB/text.csv'
     bible_sound_fpath = 'WEB'
     atr503_text_file = 'atr503/source.csv'
@@ -46,14 +46,14 @@ class Hyperparams:
     norm_type = "ins" # a normalizer function. value: bn, ln, ins or None
 
     # training scheme
-    lr = 0.0005 # Paper => Exponential decay
+    lr = 0.0010 # Paper => Exponential decay
     logdir = "logdir_" + data_set if not sanity_check else "logdir_s_" + data_set
     outputdir = 'samples_' + data_set if not sanity_check else "samples_s_" + data_set
     batch_size = 32
     num_epochs = 10000 if not sanity_check else 40 # Paper => 2M global steps!
     loss_type = "l2" # Or you can test "l1"
     num_samples = 32
-    decay_step = 500
+    decay_step = 300
     decay_rate=0.96
 
     # etc
