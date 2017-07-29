@@ -85,9 +85,9 @@ def create_train_data_siwis():
     char2idx, idx2char = load_vocab()
 
     texts, sound_files = [], []
-    reader = csv.reader(codecs.open(hp.bible_text_file, 'rb', 'utf-8'))
+    reader = csv.reader(codecs.open(hp.siwis_text_file, 'rb', 'utf-8'))
     for row in reader:
-        sound_fname, text, duration = row
+        sound_fname, text = row
         sound_file = hp.siwis_sound_fpath + "/" + sound_fname + ".wav"
         text = re.sub(r"[^ a-zçéâêîôûàèùëïü]", "", text.strip().lower())
 
