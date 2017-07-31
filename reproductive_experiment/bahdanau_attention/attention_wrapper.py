@@ -14,6 +14,8 @@
 # ==============================================================================
 """A powerful dynamic attention wrapper object."""
 
+import collections
+
 from tensorflow.python.framework import constant_op
 from tensorflow.python.framework import dtypes
 from tensorflow.python.framework import ops
@@ -344,6 +346,21 @@ class BahdanauAttention(BaseAttentionMechanism):
             return alignments
 
 
+class AttentionWrapperState(
+    collections.namedtuple(typename="AttentionWrapperState", field_names=("cell_state", "attention", "time", "alignments", "alignment_history"))):
+    """`namedtuple` storing the state of a `AttentionWrapper`.
+
+    Contains:
+
+      - `cell_state`: The state of the wrapped `RNNCell` at the previous time
+        step.
+      - `attention`: The attention emitted at the previous time step.
+      - `time`: int32 scalar containing the current time step.
+      - `alignments`: The alignment emitted at the previous time step.
+      - `alignment_history`: (if enabled) a `TensorArray` containing alignment
+         matrices from all time steps.  Call `stack()` to convert to a `Tensor`.
+    """
+
 class AttentionWrapper(rnn_cell_impl.RNNCell):
     """Wraps another `RNNCell` with attention.
     """
@@ -489,3 +506,27 @@ class AttentionWrapper(rnn_cell_impl.RNNCell):
         context = math_ops.matmul(expanded_alignments,
                                   attention_mechanism_values)
         context = array_ops.squeeze(context, [1])
+
+        if self._attention_layer is not None:
+            attention = self._attention_layer(
+                array_ops.concat([cell_output, context], 1))
+        else:
+            attention = context
+        
+        if self._alignment_history:
+            alignment_history = state.alignment_history.write(
+                state.time, alignments)
+        else:
+            alignment_history = ()
+        
+        next_state = AttentionWrapperState(
+            time=state.time + 1,
+            cell_state=next_cell_state,
+            attention=attention,
+            alignments=alignments,
+            alignment_history=alignment_history)
+        
+        if self._output_attention:
+            return attention, next_state
+        else:
+            return cell_output, next_state
