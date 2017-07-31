@@ -205,19 +205,18 @@ class BaseAttentionMechanism(AttentionMechanism):
     @property
     def values(self):
         return self._values
-  
+
     @property
     def keys(self):
         return self._keys
-  
+
     @property
     def batch_size(self):
         return self._batch_size
-  
+
     @property
     def alignments_size(self):
         return self._alignments_size
-
 
     def initial_alignments(self, batch_size, dtype):
         """Creates the initial alignment values for the `AttentionWrapper` class.
@@ -304,7 +303,6 @@ class BahdanauAttention(BaseAttentionMechanism):
         self._num_units = num_units
         self._normalize = normalize
         self._name = name
-    
 
     def __call__(self, query, previous_alignments):
         """Score the query based on the keys and values.
@@ -321,8 +319,10 @@ class BahdanauAttention(BaseAttentionMechanism):
                 `[batch_size, alignments_size]` (`alignments_size` is memory's
                 `max_time`).
         """
-        with variable_scope.variable_scope(None, "bahdanau_attention", [query]):
-            processed_query = self.query_layer(query) if self.query_layer else query
+        with variable_scope.variable_scope(None, "bahdanau_attention",
+                                           [query]):
+            processed_query = self.query_layer(
+                query) if self.query_layer else query
             dtype = processed_query.dtype
             # Reshape from [batch_size, ...] to [batch_size, 1, ...] for broadcasting.
             processed_query = array_ops.expand_dims(processed_query, 1)
@@ -338,6 +338,154 @@ class BahdanauAttention(BaseAttentionMechanism):
                 alignment model formula (concat method variant)
                 $\mathrm{score}(\mathrm{he}_j, \mathrm{ha}_i) = v^\top \tanh(W\mathrm{he}_j + U\mathrm{ha}_i)$
                 '''
-                score = math_ops.reduce_sum(v * math_ops.tanh(keys + processed_query), [2])
+                score = math_ops.reduce_sum(
+                    v * math_ops.tanh(keys + processed_query), [2])
             alignments = self._probability_fn(score, previous_alignments)
             return alignments
+
+
+class AttentionWrapper(rnn_cell_impl.RNNCell):
+    """Wraps another `RNNCell` with attention.
+    """
+
+    def __init__(self,
+                 cell,
+                 attention_mechanism,
+                 attention_layer_size=None,
+                 alignment_history=False,
+                 cell_input_fn=None,
+                 output_attention=True,
+                 initial_cell_state=None,
+                 name=None):
+        """Construct the `AttentionWrapper`.
+
+        Args:
+            cell: An instance of `RNNCell`.
+            attention_mechanism: An instance of `AttentionMechanism`.
+            attention_layer_size: Python integer, the depth of the attention (output)
+                layer. If None (default), use the context as attention at each time
+                step. Otherwise, feed the context and cell output into the attention
+                layer to generate attention at each time step.
+            alignment_history: Python boolean, whether to store alignment history
+                from all time steps in the final output state (currently stored as a
+                time major `TensorArray` on which you must call `stack()`).
+            cell_input_fn: (optional) A `callable`.  The default is:
+                `lambda inputs, attention: array_ops.concat([inputs, attention], -1)`.
+            output_attention: Python bool.  If `True` (default), the output at each
+                time step is the attention value.  This is the behavior of Luong-style
+                attention mechanisms.  If `False`, the output at each time step is
+                the output of `cell`.  This is the beahvior of Bhadanau-style
+                attention mechanisms.  In both cases, the `attention` tensor is
+                propagated to the next time step via the state and is used there.
+                This flag only controls whether the attention mechanism is propagated
+                up to the next cell in an RNN stack or to the top RNN output.
+            initial_cell_state: The initial state value to use for the cell when
+                the user calls `zero_state()`.  Note that if this value is provided
+                now, and the user uses a `batch_size` argument of `zero_state` which
+                does not match the batch size of `initial_cell_state`, proper
+                behavior is not guaranteed.
+            name: Name to use when creating ops.
+        """
+        super(AttentionWrapper, self).__init__(name=name)
+
+        if cell_input_fn is None:
+            cell_input_fn = (
+                lambda inputs, attention: array_ops.concat([inputs, attention], -1)
+            )
+
+        if attention_layer_size is not None:
+            self._attention_layer = layers_core.Dense(
+                attention_layer_size, name="attention_layer", use_bias=False)
+            self._attention_size = attention_layer_size
+        else:
+            self._attention_layer = None
+            self._attention_size = attention_mechanism.values.get_shape()[
+                -1].value
+
+        self._cell = cell
+        self._attention_mechanism = attention_mechanism
+        self._cell_input_fn = cell_input_fn
+        self._output_attention = output_attention
+        self._alignment_history = alignment_history
+
+        with ops.name_scope(name, "AttentionWrapperInit"):
+            if initial_cell_state is None:
+                self._initial_cell_state = None
+            else:
+                final_state_tensor = nest.flatten(initial_cell_state)[-1]
+                state_batch_size = (final_state_tensor.shape[0].value or
+                                    array_ops.shape(final_state_tensor)[0])
+                with ops.control_dependencies([
+                        check_ops.assert_equal(
+                            state_batch_size,
+                            self._attention_mechanism.batch_size,
+                            message="Non-matching batch sizes.")
+                ]):
+                    self._initial_cell_state = nest.map_structure(
+                        lambda s: array_ops.identity(s, name="check_initial_cell_state"),
+                        initial_cell_state
+                    )
+
+    def call(self, inputs, state):
+        """Perform a step of attention-wrapped RNN.
+
+        - Step 1: Mix the `inputs` and previous step's `attention` output via
+            `cell_input_fn`.
+        - Step 2: Call the wrapped `cell` with this input and its previous state.
+        - Step 3: Score the cell's output with `attention_mechanism`.
+        - Step 4: Calculate the alignments by passing the score through the
+            `normalizer`.
+        - Step 5: Calculate the context vector as the inner product between the
+            alignments and the attention_mechanism's values (memory).
+        - Step 6: Calculate the attention output by concatenating the cell output
+            and context through the attention layer (a linear layer with
+            `attention_size` outputs).
+
+        Args:
+          inputs: (Possibly nested tuple of) Tensor, the input at this time step.
+          state: An instance of `AttentionWrapperState` containing
+              tensors from the previous time step.
+
+        Returns:
+          A tuple `(attention_or_cell_output, next_state)`, where:
+
+          - `attention_or_cell_output` depending on `output_attention`.
+          - `next_state` is an instance of `DynamicAttentionWrapperState`
+               containing the state calculated at this time step.
+        """
+        # Step 1: Calculate the true inputs to the cell based on the
+        # previous attention value.
+        cell_inputs = self._cell_input_fn(inputs, state.attention)
+        cell_state = state.cell_state
+        cell_output, next_cell_state = self._cell(cell_inputs, cell_state)
+
+        cell_batch_size = (cell_output.shape[0].value or
+                           array_ops.shape(cell_output)[0])
+
+        with ops.control_dependencies([
+                check_ops.assert_equal(
+                    cell_batch_size,
+                    self._attention_mechanism.batch_size,
+                    message="Non-matching batch sizes.")
+        ]):
+            cell_output = array_ops.identity(
+                cell_output, name="checked_cell_output")
+
+        alignments = self._attention_mechanism(
+            cell_output, previous_alignments=state.alignments)
+
+        # Reshape from [batch_size, memory_time] to [batch_size, 1, memory_time]
+        expanded_alignments = array_ops.expand_dims(alignments, axis=1)
+        # Context is the inner product of alignments and values along the
+        # memory time dimension.
+        # alignments shape is
+        #   [batch_size, 1, memory_time]
+        # attention_mechanism.values shape is
+        #   [batch_size, memory_time, attention_mechanism.num_units]
+        # the batched matmul is over memory_time, so the output shape is
+        #   [batch_size, 1, attention_mechanism.num_units].
+        # we then squeeze out the singleton dim.
+        attention_mechanism_values = self._attention_mechanism.values
+        context = math_ops.matmul(expanded_alignments,
+                                  attention_mechanism_values)
+        context = array_ops.squeeze(context, [1])
