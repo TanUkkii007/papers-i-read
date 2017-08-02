@@ -77,7 +77,7 @@ def create_train_data_bible():
                           for char in text], np.int32).tostring())
             sound_files.append(sound_file)
 
-    return texts, sound_files
+    return sound_files, texts
 
 
 def create_train_data_siwis():
@@ -97,7 +97,7 @@ def create_train_data_siwis():
                           for char in text], np.int32).tostring())
             sound_files.append(sound_file)
 
-    return texts, sound_files
+    return sound_files, texts
 
 
 def create_train_data_atr503():
@@ -117,12 +117,12 @@ def create_train_data_atr503():
                           for char in text_hiragana], np.int32).tostring())
             sound_files.append(sound_file)
 
-    return texts, sound_files
+    return sound_files, texts
 
 
 def load_train_data():
     """We train on the whole data but the last num_samples."""
-    texts, sound_files = create_train_data()
+    sound_files, texts = create_train_data()
     if hp.sanity_check:  # We use a single mini-batch for training to overfit it.
         texts, sound_files = texts[:hp.
                                    batch_size] * 1000, sound_files[:hp.
@@ -135,7 +135,7 @@ def load_train_data():
 
 def load_eval_data():
     """We evaluate on the last num_samples."""
-    texts, _ = create_train_data()
+    _, texts = create_train_data()
     if hp.sanity_check:  # We generate samples for the same texts as the ones we've used for training.
         texts = texts[:hp.batch_size]
     else:

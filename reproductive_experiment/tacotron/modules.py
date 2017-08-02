@@ -11,6 +11,7 @@ https://www.github.com/kyubyong/tacotron
 from __future__ import print_function
 import tensorflow as tf
 from hyperparams import Hyperparams as hp
+from dual_source_attention import DualSourceAttentionWrapper
 
 def embed(inputs, vocab_size, num_units, zero_pad=True, scope="embedding", reuse=None):
     '''Embeds a given tensor. 
@@ -225,6 +226,30 @@ def attention_decoder(inputs, memory, num_units=None, scope="attention_decoder",
         attention_mecanism = tf.contrib.seq2seq.BahdanauAttention(num_units, memory)
         decoder_cell = tf.contrib.rnn.GRUCell(num_units)
         cell_with_attention = tf.contrib.seq2seq.AttentionWrapper(decoder_cell, attention_mecanism, num_units)
+        outputs, _ = tf.nn.dynamic_rnn(cell_with_attention, inputs, dtype=tf.float32) # (1, 6, 16)
+    return outputs
+
+def dual_attention_decoder(inputs, memory1, memory2, num_units=None, scope="attention_decoder", reuse=None):
+    '''Applies a GRU to `inputs`, while attending `memory`.
+    Args:
+      inputs: A 3d tensor with shape of [N, T', C']. Decoder inputs.
+      num_units: An int. Attention size.
+      memory: A 3d tensor with shape of [N, T, C]. Outputs of encoder network.
+      scope: Optional scope for `variable_scope`.  
+      reuse: Boolean, whether to reuse the weights of a previous layer
+        by the same name.
+    
+    Returns:
+      A 3d tensor with shape of [N, T, num_units].    
+    '''
+    with tf.variable_scope(scope, reuse=reuse):
+        if num_units is None:
+            num_units = inputs.get_shape().as_list()[-1]
+        
+        attention_mecanism1 = tf.contrib.seq2seq.BahdanauAttention(num_units, memory1)
+        attention_mecanism2 = tf.contrib.seq2seq.BahdanauAttention(num_units, memory2)
+        decoder_cell = tf.contrib.rnn.GRUCell(num_units)
+        cell_with_attention = DualSourceAttentionWrapper(decoder_cell, attention_mecanism1, attention_mecanism2, num_units)
         outputs, _ = tf.nn.dynamic_rnn(cell_with_attention, inputs, dtype=tf.float32) # (1, 6, 16)
     return outputs
 
