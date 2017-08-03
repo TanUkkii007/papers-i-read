@@ -15,6 +15,7 @@ import re
 import os
 import csv
 import codecs
+from itertools import chain, repeat
 
 
 def load_vocab():
@@ -58,6 +59,22 @@ def create_train_data():
         return create_train_data_siwis()
     else:
         raise ValueError('unknown data set')
+
+
+def create_dual_source_train_data():
+    if hp.data_set == 'bible_siwis':
+        return create_bible_siwis_train_data()
+    else:
+        raise ValueError('unknown data set')
+
+
+def create_bible_siwis_train_data():
+    bible_sound, bible_text = create_train_data_bible()
+    siwis_sound, siwis_text = create_train_data_siwis()
+    bible_text = bible_text + list(repeat("", len(siwis_text)))
+    siwis_text = list(repeat("", len(bible_text))) + siwis_text
+    sounds = bible_sound + siwis_sound
+    return sounds, bible_text, siwis_text
 
 
 def create_train_data_bible():
@@ -131,6 +148,20 @@ def load_train_data():
         texts, sound_files = texts[:-hp.num_samples], sound_files[:-hp.
                                                                   num_samples]
     return texts, sound_files
+
+
+def load_dual_source_train_data():
+    """We train on the whole data but the last num_samples."""
+    sound_files, texts1, texts2 = create_dual_source_train_data()
+    if hp.sanity_check:  # We use a single mini-batch for training to overfit it.
+        # ToDo: mix texts1 and texts2
+        sound_files, texts1, texts2 = sound_files[:hp.batch_size] * 1000, texts1[:hp.batch_size] * 1000, texts2[:hp.batch_size] * 1000
+    else:
+        # ToDo: exclude samples
+        #sound_files, texts1, texts2 = sound_files[:-hp.num_samples], texts1[:-hp.num_samples], texts2[:-hp.num_samples]
+        pass
+
+    return texts1, texts2, sound_files
 
 
 def load_eval_data():

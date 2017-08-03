@@ -20,7 +20,7 @@ from hyperparams import Hyperparams as hp
 from prepro import *
 from networks import encode, dual_decode1, decode2
 from modules import *
-from data_load import get_batch
+from data_load import get_dual_source_batch
 from utils import shift_by_one
 from prepro import load_vocab
 
@@ -31,8 +31,7 @@ class DualSourceAttentionGraph:
 
         with self.graph.as_default():
             if is_training:
-                # ToDo: use dual source
-                self.x, self.y, self.z, self.num_batch = get_batch()
+                self.x1, self.x2, self.y, self.z, self.num_batch = get_dual_source_batch()
             else:  # Evaluation
                 self.x1 = tf.placeholder(tf.int32, shape=(None, None))
                 self.x2 = tf.placeholder(tf.int32, shape=(None, None))
