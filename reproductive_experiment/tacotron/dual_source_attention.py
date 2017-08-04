@@ -43,6 +43,8 @@ class DualSourceAttentionWrapper(rnn_cell_impl.RNNCell):
                  initial_cell_state=None,
                  name=None):
         super(DualSourceAttentionWrapper, self).__init__(name=name)
+        if name is None:
+            name = "dual_source_attention_wrapper"
         name1 = name + "1"
         name2 = name + "2"
         self._attention_layer = layers_core.Dense(
@@ -55,20 +57,20 @@ class DualSourceAttentionWrapper(rnn_cell_impl.RNNCell):
             cell,
             attention_mechanism1,
             attention_layer_size=None,
-            alignment_history,
-            cell_input_fn,
-            output_attention,
-            initial_cell_state,
-            name1)
+            alignment_history=alignment_history,
+            cell_input_fn=cell_input_fn,
+            output_attention=output_attention,
+            initial_cell_state=initial_cell_state,
+            name=name1)
         self._attention_wrapper2 = tf.contrib.seq2seq.AttentionWrapper(
             cell,
             attention_mechanism2,
             attention_layer_size=None,
-            alignment_history,
-            cell_input_fn,
-            output_attention,
-            initial_cell_state,
-            name2)
+            alignment_history=alignment_history,
+            cell_input_fn=cell_input_fn,
+            output_attention=output_attention,
+            initial_cell_state=initial_cell_state,
+            name=name2)
 
     def call(self, inputs, state):
         cell_inputs = self._cell_input_fn(inputs, state.attention)

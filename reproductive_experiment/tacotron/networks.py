@@ -15,6 +15,12 @@ from modules import *
 from prepro import load_vocab
 
 def encode(inputs, is_training=True, scope="encoder", reuse=None):
+    # Load vocabulary
+    char2idx, idx2char = load_vocab()
+    return encode_vocab(inputs, char2idx, idx2char, is_training, scope, reuse)
+
+
+def encode_vocab(inputs, char2idx, idx2char, is_training=True, scope="encoder", reuse=None):
     '''
     Args:
       inputs: A 2d tensor with shape of [N, T], dtype of int32.
@@ -27,8 +33,6 @@ def encode(inputs, is_training=True, scope="encoder", reuse=None):
       A collection of Hidden vectors, whose shape is (N, T, E).
     '''
     with tf.variable_scope(scope, reuse=reuse):
-        # Load vocabulary
-        char2idx, idx2char = load_vocab()
 
         # Character Embedding
         inputs = embed(inputs, len(char2idx), hp.embed_size) # (N, T, E)

@@ -18,7 +18,7 @@ import os
 
 from hyperparams import Hyperparams as hp
 from prepro import *
-from networks import encode, dual_decode1, decode2
+from networks import encode_vocab, dual_decode1, decode2
 from modules import *
 from data_load import get_dual_source_batch
 from utils import shift_by_one
@@ -41,12 +41,16 @@ class DualSourceAttentionGraph:
             self.decoder_inputs = shift_by_one(self.y)
             with tf.variable_scope("net"):
                 # Encoder 1
-                self.memory1 = encode(
-                    self.x1, is_training=is_training)  # (N, T, E)
+                # ToDo: use load_dual_source_vocabrary 
+                char2idx_ja, idx2char_ja = load_vocab_ja()
+                self.memory1 = encode_vocab(
+                    self.x1, char2idx_ja, idx2char_ja, is_training=is_training, scope="encoder1")  # (N, T, E)
                 
                 # Encoder 2
-                self.memory2 = encode(
-                    self.x2, is_training=is_training)  # (N, T, E)
+                # ToDo: use load_dual_source_vocabrary
+                char2idx_kana, idx2char_kana = load_vocab_ja_hiragana()
+                self.memory2 = encode_vocab(
+                    self.x2, char2idx_kana, idx2char_kana, is_training=is_training, scope="encoder2")  # (N, T, E)
 
                 # Decoder
                 self.outputs1 = dual_decode1(

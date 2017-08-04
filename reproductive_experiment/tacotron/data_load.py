@@ -229,7 +229,7 @@ def get_dual_source_batch():
         # Decode sound file
         x1, x2, y, z = get_text_and_spectrograms(
             inputs=[text1, text2, sound_file],
-            dtypes=[tf.int32, tf.float32, tf.float32],
+            dtypes=[tf.int32, tf.int32, tf.float32, tf.float32],
             capacity=128,
             num_threads=32)
 
