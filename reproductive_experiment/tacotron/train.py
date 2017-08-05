@@ -22,7 +22,6 @@ from networks import encode, decode1, decode2
 from modules import *
 from data_load import get_batch
 from utils import shift_by_one
-from prepro import load_vocab
 
 
 class Graph:
@@ -95,8 +94,6 @@ def main():
     print("Training Graph loaded")
 
     with g.graph.as_default():
-        # Load vocabulary
-        char2idx, idx2char = load_vocab()
 
         # Training
         sv = tf.train.Supervisor(logdir=hp.logdir, save_model_secs=0)

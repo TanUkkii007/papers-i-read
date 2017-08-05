@@ -104,8 +104,6 @@ def main():
     print("Training Graph loaded")
 
     with g.graph.as_default():
-        # Load vocabulary
-        char2idx, idx2char = load_vocab()
 
         # Training
         sv = tf.train.Supervisor(logdir=hp.logdir, save_model_secs=0)
