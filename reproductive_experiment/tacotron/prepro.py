@@ -30,14 +30,14 @@ def load_vocab():
 
 
 def load_vocab_en():
-    vocab = "EG abcdefghijklmnopqrstuvwxyz'"  # E: Empty. ignore G
+    vocab = "EG ',.abcdefghijklmnopqrstuvwxyz"  # E: Empty. ignore G
     char2idx = {char: idx for idx, char in enumerate(vocab)}
     idx2char = {idx: char for idx, char in enumerate(vocab)}
     return char2idx, idx2char
 
 
 def load_vocab_fr():
-    vocab = "EG abcdefghijklmnopqrstuvwxyz'çéâêîôûàèùëïü"  # E: Empty. ignore G
+    vocab = " ',.abcdefghijklmnopqrstuvwxyzàâçèéêëîïôùûü"  # E: Empty. ignore G
     char2idx = {char: idx for idx, char in enumerate(vocab)}
     idx2char = {idx: char for idx, char in enumerate(vocab)}
     return char2idx, idx2char
@@ -96,7 +96,7 @@ def create_train_data_bible():
     for row in reader:
         sound_fname, text, duration = row
         sound_file = hp.bible_sound_fpath + "/" + sound_fname + ".wav"
-        text = re.sub(r"[^ a-z]", "", text.strip().lower())
+        text = re.sub(r"[^ a-z.',]", "", text.strip().lower())
 
         if hp.min_len <= len(text) <= hp.max_len:
             texts.append(
@@ -116,7 +116,7 @@ def create_train_data_siwis():
     for row in reader:
         sound_fname, text = row
         sound_file = hp.siwis_sound_fpath + "/" + sound_fname + ".wav"
-        text = re.sub(r"[^ a-zçéâêîôûàèùëïü]", "", text.strip().lower())
+        text = re.sub(r"[^ a-z.',çéâêîôûàèùëïü]", "", text.strip().lower())
 
         if hp.min_len <= len(text) <= hp.max_len:
             texts.append(
