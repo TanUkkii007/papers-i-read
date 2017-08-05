@@ -1,4 +1,5 @@
 from tensorflow.python.framework import ops
+from tensorflow.python.framework import tensor_shape
 from tensorflow.python.layers import core as layers_core
 from tensorflow.python.ops import rnn_cell_impl
 from tensorflow.python.ops import array_ops
@@ -10,15 +11,15 @@ import collections
 
 class DualSourceAttentionWrapperState(
         collections.namedtuple("DualSourceAttentionWrapperState",
-                               ("state1", "state2", "cell_state",
+                               ("state1_time", "state1_alignments", "state1_alignment_history", "state2_time", "state2_alignments", "state2_alignment_history", "cell_state",
                                 "attention"))):
     pass
 
 
-def _caluculate_context(attention_wrapper, cell_output, state):
+def _caluculate_context(attention_wrapper, cell_output, alignments):
 
-    alignments = attention_wrapper.attention_mechanism(
-        cell_output, previous_alignments=state.alignments)
+    alignments = attention_wrapper._attention_mechanism(
+        cell_output, previous_alignments=alignments)
 
     expanded_alignments = array_ops.expand_dims(alignments, 1)
     attention_mechanism_values = attention_wrapper._attention_mechanism.values
@@ -43,12 +44,16 @@ class DualSourceAttentionWrapper(rnn_cell_impl.RNNCell):
                  initial_cell_state=None,
                  name=None):
         super(DualSourceAttentionWrapper, self).__init__(name=name)
+        if cell_input_fn is None:
+            cell_input_fn = (
+                lambda inputs, attention: array_ops.concat([inputs, attention], -1))
         if name is None:
             name = "dual_source_attention_wrapper"
         name1 = name + "1"
         name2 = name + "2"
         self._attention_layer = layers_core.Dense(
             attention_layer_size, name="attention_layer", use_bias=False)
+        self._attention_size = attention_layer_size
         self._cell_input_fn = cell_input_fn
         self._cell = cell
         self._attention_mechanism1 = attention_mechanism1
@@ -93,29 +98,39 @@ class DualSourceAttentionWrapper(rnn_cell_impl.RNNCell):
                 cell_output, name="checked_cell_output")
 
             context1, alignments1 = _caluculate_context(
-                self._attention_wrapper1, cell_output, state.state1)
+                self._attention_wrapper1, cell_output, state.state1_alignments)
             context2, alignments2 = _caluculate_context(
-                self._attention_wrapper2, cell_output, state.state2)
+                self._attention_wrapper2, cell_output, state.state2_alignments)
 
             attention = self._attention_layer(
                 array_ops.concat([cell_output, context1, context2], axis=1))
 
-            next_state1 = tf.contrib.seq2seq.AttentionWrapperState(
-                time=state1.time + 1,
-                cell_state=None,
-                attention=None,
-                alignments=alignments1,
-                alignment_history=())
-            next_state2 = tf.contrib.seq2seq.AttentionWrapperState(
-                time=state2.time + 1,
-                cell_state=None,
-                attention=None,
-                alignments=alignments2,
-                alignment_history=())
             next_state = DualSourceAttentionWrapperState(
-                state1=next_state1,
-                state2=next_state2,
+                state1_time=state.state1_time + 1,
+                state1_alignments=alignments1,
+                state1_alignment_history=(),
+                state2_time=state.state2_time + 1,
+                state2_alignments=alignments2,
+                state2_alignment_history=(),
                 cell_state=next_cell_state,
                 attention=attention)
 
             return attention, next_state
+    
+
+    @property
+    def output_size(self):
+        return self._attention_size
+
+
+    @property
+    def state_size(self):
+        return DualSourceAttentionWrapperState(
+            state1_time=tensor_shape.TensorShape([]),
+            state1_alignments=self._attention_mechanism1.alignments_size,
+            state1_alignment_history=(),
+            state2_time=tensor_shape.TensorShape([]),
+            state2_alignments=self._attention_mechanism2.alignments_size,
+            state2_alignment_history=(),
+            cell_state=self._cell.state_size,
+            attention=self._attention_size)  # alignment_history is sometimes a TensorArray
