@@ -95,6 +95,8 @@ def create_train_data_bible():
     reader = csv.reader(codecs.open(hp.bible_text_file, 'rb', 'utf-8'))
     for row in reader:
         sound_fname, text, duration = row
+        if hp.reverse_input:
+            text = text[::-1]
         sound_file = hp.bible_sound_fpath + "/" + sound_fname + ".wav"
         text = re.sub(r"[^ a-z.',]", "", text.strip().lower())
 
@@ -115,6 +117,8 @@ def create_train_data_siwis():
     reader = csv.reader(codecs.open(hp.siwis_text_file, 'rb', 'utf-8'))
     for row in reader:
         sound_fname, text = row
+        if hp.reverse_input:
+            text = text[::-1]
         sound_file = hp.siwis_sound_fpath + "/" + sound_fname + ".wav"
         text = re.sub(r"[^ a-z.',çéâêîôûàèùëïü]", "", text.strip().lower())
 
@@ -136,6 +140,9 @@ def create_train_data_atr503():
     reader = csv.reader(codecs.open(hp.atr503_text_file, 'rb', 'utf-8'))
     for row in reader:
         sound_index, text_mixed, text_hiragana = row
+        if hp.reverse_input:
+            text_mixed, text_hiragana = text_mixed[::-1], text_hiragana[::-1]
+        
         sound_fname = "nitech_jp_atr503_m001_" + sound_index
         sound_file = hp.atr503_sound_fpath + "/" + sound_fname + ".wav"
 
