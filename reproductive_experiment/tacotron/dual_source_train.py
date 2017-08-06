@@ -42,15 +42,15 @@ class DualSourceAttentionGraph:
             with tf.variable_scope("net"):
                 # Encoder 1
                 # ToDo: use load_dual_source_vocabrary 
-                char2idx_ja, idx2char_ja = load_vocab_ja()
+                char2idx_kana, idx2char_kana = load_vocab_ja_hiragana()
                 self.memory1 = encode_vocab(
-                    self.x1, char2idx_ja, idx2char_ja, is_training=is_training, scope="encoder1")  # (N, T, E)
+                    self.x1, char2idx_kana, idx2char_kana, is_training=is_training, scope="encoder1")  # (N, T, E)
                 
                 # Encoder 2
                 # ToDo: use load_dual_source_vocabrary
-                char2idx_kana, idx2char_kana = load_vocab_ja_hiragana()
+                phone2idx, idx2phone = load_phone_ja()
                 self.memory2 = encode_vocab(
-                    self.x2, char2idx_kana, idx2char_kana, is_training=is_training, scope="encoder2")  # (N, T, E)
+                    self.x2, phone2idx, idx2phone, is_training=is_training, scope="encoder2")  # (N, T, E)
 
                 # Decoder
                 self.outputs1 = dual_decode1(

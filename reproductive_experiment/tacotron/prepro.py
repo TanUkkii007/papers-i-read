@@ -56,6 +56,12 @@ def load_vocab_ja():
     idx2char = {idx: char for idx, char in enumerate(vocab)}
     return char2idx, idx2char
 
+def load_phone_ja():
+    phones = ['A', 'I', 'N', 'O', 'U', 'a', 'b', 'by', 'ch', 'cl', 'd', 'dy', 'e', 'f', 'g', 'gy', 'h', 'hy', 'i', 'j', 'k', 'ky', 'm', 'my', 'n', 'ny', 'o', 'p', 'pau', 'py', 'r', 'ry', 's', 'sh', 'sil', 't', 'ts', 'u', 'w', 'y', 'z']
+    phone2idx = {phone: idx for idx, phone in enumerate(phones)}
+    idx2phone = {idx: phone for idx, phone in enumerate(phones)}
+    return phone2idx, idx2phone
+
 
 def create_train_data():
     if hp.data_set == 'bible':
@@ -73,7 +79,8 @@ def create_dual_source_train_data():
     if hp.data_set == 'bible_siwis':
         return create_bible_siwis_train_data()
     if hp.data_set == 'atr503_dual':
-        return create_train_data_atr503()
+        sound_files, texts_mixed, texts_kana, texts_phone = create_train_data_atr503()
+        return sound_files, texts_kana, texts_phone
     else:
         raise ValueError('unknown data set')
 
@@ -135,13 +142,15 @@ def create_train_data_atr503():
     # Load vocabulary
     char2idx_ja, idx2char_ja = load_vocab_ja()
     char2idx_kana, idx2char_kana = load_vocab_ja_hiragana()
+    phone2idx, idx2phone = load_phone_ja()
 
-    texts_mixed, texts_kana, sound_files = [], [], []
+    texts_mixed, texts_kana, texts_phone, sound_files = [], [], [], []
     reader = csv.reader(codecs.open(hp.atr503_text_file, 'rb', 'utf-8'))
     for row in reader:
-        sound_index, text_mixed, text_hiragana = row
+        sound_index, text_mixed, text_hiragana, phones = row
+        phones = phones.split(' ')
         if hp.reverse_input:
-            text_mixed, text_hiragana = text_mixed[::-1], text_hiragana[::-1]
+            text_mixed, text_hiragana, phones = text_mixed[::-1], text_hiragana[::-1], phones[::-1]
         
         sound_fname = "nitech_jp_atr503_m001_" + sound_index
         sound_file = hp.atr503_sound_fpath + "/" + sound_fname + ".wav"
@@ -150,15 +159,22 @@ def create_train_data_atr503():
             texts_mixed.append(
                 np.array([char2idx_ja[char]
                           for char in text_mixed], np.int32).tostring())
-            sound_files.append(sound_file)
-        
-        if hp.min_len <= len(text_hiragana) <= hp.max_len:
+
             texts_kana.append(
                 np.array([char2idx_kana[char]
                           for char in text_hiragana], np.int32).tostring())
+
+            texts_phone.append(
+                np.array([phone2idx[phone]
+                          for phone in phones], np.int32).tostring())
+            
             sound_files.append(sound_file)
 
-    return sound_files, texts_mixed, texts_kana
+            assert len(texts_mixed) == len(texts_kana)
+            assert len(texts_kana) == len(texts_phone)
+            assert len(texts_phone) == len(sound_files)
+
+    return sound_files, texts_mixed, texts_kana, texts_phone
 
 
 def load_train_data():
