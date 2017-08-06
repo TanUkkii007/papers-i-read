@@ -1,3 +1,4 @@
+from tensorflow.python.framework import dtypes
 from tensorflow.python.framework import ops
 from tensorflow.python.framework import tensor_shape
 from tensorflow.python.layers import core as layers_core
@@ -5,14 +6,20 @@ from tensorflow.python.ops import rnn_cell_impl
 from tensorflow.python.ops import array_ops
 from tensorflow.python.ops import check_ops
 from tensorflow.python.ops import math_ops
+from tensorflow.python.ops import tensor_array_ops
+from tensorflow.python.util import nest
 import tensorflow as tf
 import collections
 
+_zero_state_tensors = rnn_cell_impl._zero_state_tensors  # pylint: disable=protected-access
+
 
 class DualSourceAttentionWrapperState(
-        collections.namedtuple("DualSourceAttentionWrapperState",
-                               ("state1_time", "state1_alignments", "state1_alignment_history", "state2_time", "state2_alignments", "state2_alignment_history", "cell_state",
-                                "attention"))):
+        collections.namedtuple(
+            "DualSourceAttentionWrapperState",
+            ("state1_time", "state1_alignments", "state1_alignment_history",
+             "state2_time", "state2_alignments", "state2_alignment_history",
+             "cell_state", "attention"))):
     pass
 
 
@@ -46,7 +53,8 @@ class DualSourceAttentionWrapper(rnn_cell_impl.RNNCell):
         super(DualSourceAttentionWrapper, self).__init__(name=name)
         if cell_input_fn is None:
             cell_input_fn = (
-                lambda inputs, attention: array_ops.concat([inputs, attention], -1))
+                lambda inputs, attention: array_ops.concat([inputs, attention], -1)
+            )
         if name is None:
             name = "dual_source_attention_wrapper"
         name1 = name + "1"
@@ -55,7 +63,12 @@ class DualSourceAttentionWrapper(rnn_cell_impl.RNNCell):
             attention_layer_size, name="attention_layer", use_bias=False)
         self._attention_size = attention_layer_size
         self._cell_input_fn = cell_input_fn
+        self._alignment_history = alignment_history
         self._cell = cell
+        if (initial_cell_state is not None):
+            raise NotImplementedError("initial_cell_state is not None")
+        else:
+            self._initial_cell_state = initial_cell_state
         self._attention_mechanism1 = attention_mechanism1
         self._attention_mechanism2 = attention_mechanism2
         self._attention_wrapper1 = tf.contrib.seq2seq.AttentionWrapper(
@@ -105,23 +118,29 @@ class DualSourceAttentionWrapper(rnn_cell_impl.RNNCell):
             attention = self._attention_layer(
                 array_ops.concat([cell_output, context1, context2], axis=1))
 
+            if self._alignment_history:
+                alignment_history1 = state.state1_alignment_history.write(
+                    state.state1_time, alignments1)
+                alignment_history2 = state.state2_alignment_history.write(
+                    state.state2_time, alignments2)
+            else:
+                alignment_history1, alignment_history2 = (), ()
+
             next_state = DualSourceAttentionWrapperState(
                 state1_time=state.state1_time + 1,
                 state1_alignments=alignments1,
-                state1_alignment_history=(),
+                state1_alignment_history=alignment_history1,
                 state2_time=state.state2_time + 1,
                 state2_alignments=alignments2,
-                state2_alignment_history=(),
+                state2_alignment_history=alignment_history2,
                 cell_state=next_cell_state,
                 attention=attention)
 
             return attention, next_state
-    
 
     @property
     def output_size(self):
         return self._attention_size
-
 
     @property
     def state_size(self):
@@ -133,4 +152,49 @@ class DualSourceAttentionWrapper(rnn_cell_impl.RNNCell):
             state2_alignments=self._attention_mechanism2.alignments_size,
             state2_alignment_history=(),
             cell_state=self._cell.state_size,
-            attention=self._attention_size)  # alignment_history is sometimes a TensorArray
+            attention=self._attention_size
+        )  # alignment_history is sometimes a TensorArray
+
+    def zero_state(self, batch_size, dtype):
+        with ops.name_scope(
+                type(self).__name__ + "ZeroState", values=[batch_size]):
+            if self._initial_cell_state is not None:
+                cell_state = self._initial_cell_state
+            else:
+                cell_state = self._cell.zero_state(batch_size, dtype)
+
+            with ops.control_dependencies([
+                    check_ops.assert_equal(
+                        batch_size,
+                        self._attention_mechanism1.batch_size,
+                        message="Non-matching batch sizes."),
+                    check_ops.assert_equal(
+                        batch_size,
+                        self._attention_mechanism2.batch_size,
+                        message="Non-matching batch sizes.")
+            ]):
+
+                cell_state = nest.map_structure(
+                    lambda s: array_ops.identity(s, name="checked_cell_state"),
+                    cell_state)
+
+            if self._alignment_history:
+                aligmnent_history1 = tensor_array_ops.TensorArray(
+                    dtype=dtype, size=0, dynamic_size=True)
+                aligmnent_history2 = tensor_array_ops.TensorArray(
+                    dtype=dtype, size=0, dynamic_size=True)
+            else:
+                aligmnent_history1, aligmnent_history2 = (), ()
+
+            return DualSourceAttentionWrapperState(
+                state1_time=array_ops.zeros([], dtype=dtypes.int32),
+                state1_alignments=self._attention_mechanism1.
+                initial_alignments(batch_size, dtype),
+                state1_alignment_history=aligmnent_history1,
+                state2_time=array_ops.zeros([], dtype=dtypes.int32),
+                state2_alignments=self._attention_mechanism2.
+                initial_alignments(batch_size, dtype),
+                state2_alignment_history=aligmnent_history2,
+                cell_state=cell_state,
+                attention=_zero_state_tensors(self._attention_size, batch_size,
+                                              dtype))
