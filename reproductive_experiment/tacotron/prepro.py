@@ -67,7 +67,7 @@ def create_train_data():
     if hp.data_set == 'bible':
         return create_train_data_bible()
     elif hp.data_set == 'atr503':
-        sound_files, texts_mixed, texts_kana = create_train_data_atr503()
+        sound_files, texts_mixed, texts_kana, phones = create_train_data_atr503()
         return sound_files, texts_kana
     elif hp.data_set == 'siwis':
         return create_train_data_siwis()
