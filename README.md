@@ -74,8 +74,8 @@ Deep Neural Networks with Multitask Learning https://ronan.collobert.com/pub/mat
 - [ ] Meta-Learning with Temporal Convolutions https://arxiv.org/abs/1707.03141
 - [ ] Dual Learning for Machine Translation https://arxiv.org/abs/1611.00179
 - [ ] FaceNet: A Unified Embedding for Face Recognition and Clustering https://arxiv.org/abs/1503.03832
-- [ ] Long Short-Term Memory http://web.eecs.utk.edu/~itamar/courses/ECE-692/Bobby_paper1.pdf
 - [ ] Adam: A Method for Stochastic Optimization https://arxiv.org/abs/1412.6980
+- [ ] Empirical Evaluation of Gated Recurrent Neural Networks on Sequence Modeling https://arxiv.org/abs/1412.3555
 
 #### ready to summarize
 
@@ -88,6 +88,7 @@ Deep Neural Networks with Multitask Learning https://ronan.collobert.com/pub/mat
 - [ ] Fully Character-Level Neural Machine Translation without Explicit Segmentation https://arxiv.org/abs/1610.03017
 - [ ] Polyglot Neural Language Models: A Case Study in Cross-Lingual Phonetic Representation Learning https://arxiv.org/abs/1605.03832
 - [ ] Effective Approaches to Attention-based Neural Machine Translation https://arxiv.org/abs/1508.04025
+- [ ] Long Short-Term Memory http://web.eecs.utk.edu/~itamar/courses/ECE-692/Bobby_paper1.pdf
 
 
 ### Distributed System
