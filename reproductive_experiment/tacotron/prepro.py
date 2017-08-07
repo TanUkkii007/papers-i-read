@@ -232,6 +232,7 @@ def load_eval_data():
     else:
         texts = texts[-hp.num_samples:]
 
+    # Note that X is padded to zero upto max_len.
     X = np.zeros(shape=[len(texts), hp.max_len], dtype=np.int32)
     for i, text in enumerate(texts):
         _text = np.fromstring(text, np.int32)  # byte to int
@@ -248,6 +249,7 @@ def load_dual_source_eval_data():
     else:
         texts1, texts2 = texts1[-hp.num_samples:], texts2[-hp.num_samples:]
 
+    # Note that X1 and X2 are padded to zero upto max_len.
     X1 = np.zeros(shape=[len(texts1), hp.max_len], dtype=np.int32)
     X2 = np.zeros(shape=[len(texts2), hp.max_len], dtype=np.int32)
 
