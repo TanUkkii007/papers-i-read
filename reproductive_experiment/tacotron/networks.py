@@ -81,7 +81,7 @@ def decode1(decoder_inputs, memory, is_training=True, scope="decoder1", reuse=No
         dec = prenet(decoder_inputs, is_training=is_training) # (N, T', E/2)
 
         # Attention RNN
-        dec, final_state = attention_decoder(dec, memory, hp.embed_size) # (N, T', E)
+        dec, final_state = attention_decoder(dec, memory, hp.embed_size, is_training) # (N, T', E)
 
         # Decoder RNNs
         # 2-layer residual GRU
@@ -112,7 +112,7 @@ def dual_decode1(decoder_inputs, memory1, memory2, is_training=True, scope="dual
         dec = prenet(decoder_inputs, is_training=is_training) # (N, T', E/2)
 
         # Attention RNN
-        dec, final_state = dual_attention_decoder(dec, memory1, memory2, hp.embed_size) # (N, T', E)
+        dec, final_state = dual_attention_decoder(dec, memory1, memory2, hp.embed_size, is_training) # (N, T', E)
 
         # Decoder RNNs
         # 2-layer residual GRU
