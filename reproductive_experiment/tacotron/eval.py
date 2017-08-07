@@ -31,6 +31,9 @@ def eval():
     X = load_eval_data()  # texts
     char2idx, idx2char = load_vocab()
 
+    ah = g.attention_final_state.alignment_history
+    alignment_history = ah.gather(tf.range(0, ah.size()))
+
     with g.graph.as_default():
         sv = tf.train.Supervisor()
         with sv.managed_session(config=tf.ConfigProto(
@@ -51,12 +54,12 @@ def eval():
                 outputs1[:, j, :] = _outputs1[:, j, :]
             outputs2 = sess.run(g.outputs2, {g.outputs1: outputs1})
 
-            attention_final_state = sess.run(g.attention_final_state, {g.x: X, g.y: outputs1})
+            alignment_history = sess.run(alignment_history, {g.x: X, g.y: outputs1})
 
     # Generate wav files
     if not os.path.exists(hp.outputdir): os.mkdir(hp.outputdir)
     with codecs.open(hp.outputdir + '/text.txt', 'w', 'utf-8') as fout:
-        for i, (x, s, a) in enumerate(zip(X, outputs2, attention_final_state.alignment_history)):
+        for i, (x, s, a) in enumerate(zip(X, outputs2, alignment_history)):
             # write text
             fout.write(
                 str(i) + "\t" + "".join(idx2char[idx]
@@ -73,7 +76,7 @@ def eval():
                 audio = spectrogram2wav(s**hp.power)
             write(hp.outputdir + "/{}_{}.wav".format(mname, i), hp.sr, audio)
 
-            visualize_attention(a[i], [idx2char[idx]for idx in np.fromstring(x, np.int32)])
+            visualize_attention(a, [idx2char[idx]for idx in np.fromstring(x, np.int32)])
             save_figure(hp.outputdir + "/{}_{}_attention.png".format(mname, i))
 
 if __name__ == '__main__':
