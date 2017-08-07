@@ -35,9 +35,9 @@ def eval():
     phone2idx, idx2phone = load_phone_ja()
 
     ah1 = g.attention_final_state.state1_alignment_history
-    alignment_history1 = ah1.gather(tf.range(0, ah.size()))
+    alignment_history1 = ah1.gather(tf.range(0, ah1.size()))
     ah2 = g.attention_final_state.state2_alignment_history
-    alignment_history2 = ah1.gather(tf.range(0, ah.size()))
+    alignment_history2 = ah2.gather(tf.range(0, ah2.size()))
 
     with g.graph.as_default():
         sv = tf.train.Supervisor()
