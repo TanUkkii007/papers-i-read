@@ -81,7 +81,7 @@ def decode1(decoder_inputs, memory, is_training=True, scope="decoder1", reuse=No
         dec = prenet(decoder_inputs, is_training=is_training) # (N, T', E/2)
 
         # Attention RNN
-        dec = attention_decoder(dec, memory, hp.embed_size) # (N, T', E)
+        dec, final_state = attention_decoder(dec, memory, hp.embed_size) # (N, T', E)
 
         # Decoder RNNs
         # 2-layer residual GRU
@@ -91,7 +91,7 @@ def decode1(decoder_inputs, memory, is_training=True, scope="decoder1", reuse=No
         # Outputs => (N, T', hp.n_mels*hp.r)
         out_dim = decoder_inputs.get_shape().as_list()[-1]
         outputs = tf.layers.dense(dec, out_dim)
-    return outputs
+    return outputs, final_state
 
 def dual_decode1(decoder_inputs, memory1, memory2, is_training=True, scope="dual_decoder1", reuse=None):
     '''
@@ -112,7 +112,7 @@ def dual_decode1(decoder_inputs, memory1, memory2, is_training=True, scope="dual
         dec = prenet(decoder_inputs, is_training=is_training) # (N, T', E/2)
 
         # Attention RNN
-        dec = dual_attention_decoder(dec, memory1, memory2, hp.embed_size) # (N, T', E)
+        dec, final_state = dual_attention_decoder(dec, memory1, memory2, hp.embed_size) # (N, T', E)
 
         # Decoder RNNs
         # 2-layer residual GRU
@@ -122,7 +122,7 @@ def dual_decode1(decoder_inputs, memory1, memory2, is_training=True, scope="dual
         # Outputs => (N, T', hp.n_mels*hp.r)
         out_dim = decoder_inputs.get_shape().as_list()[-1]
         outputs = tf.layers.dense(dec, out_dim)
-    return outputs
+    return outputs, final_state
 
 def decode2(inputs, is_training=True, scope="decoder2", reuse=None):
     '''

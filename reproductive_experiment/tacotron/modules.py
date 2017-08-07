@@ -253,8 +253,8 @@ def dual_attention_decoder(inputs, memory1, memory2, num_units=None, scope="atte
         attention_mecanism2 = tf.contrib.seq2seq.BahdanauAttention(num_units, memory2)
         decoder_cell = tf.contrib.rnn.GRUCell(num_units)
         cell_with_attention = DualSourceAttentionWrapper(decoder_cell, attention_mecanism1, attention_mecanism2, num_units)
-        outputs, _ = tf.nn.dynamic_rnn(cell_with_attention, inputs, dtype=tf.float32) # (1, 6, 16)
-    return outputs
+        outputs, final_state = tf.nn.dynamic_rnn(cell_with_attention, inputs, dtype=tf.float32) # (1, 6, 16)
+    return outputs, final_state
 
 def prenet(inputs, is_training=True, scope="prenet", reuse=None):
     '''Prenet for Encoder and Decoder.

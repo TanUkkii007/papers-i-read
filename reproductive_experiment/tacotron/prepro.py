@@ -56,8 +56,14 @@ def load_vocab_ja():
     idx2char = {idx: char for idx, char in enumerate(vocab)}
     return char2idx, idx2char
 
+
 def load_phone_ja():
-    phones = ['A', 'I', 'N', 'O', 'U', 'a', 'b', 'by', 'ch', 'cl', 'd', 'dy', 'e', 'f', 'g', 'gy', 'h', 'hy', 'i', 'j', 'k', 'ky', 'm', 'my', 'n', 'ny', 'o', 'p', 'pau', 'py', 'r', 'ry', 's', 'sh', 'sil', 't', 'ts', 'u', 'w', 'y', 'z']
+    phones = [
+        'A', 'I', 'N', 'O', 'U', 'a', 'b', 'by', 'ch', 'cl', 'd', 'dy', 'e',
+        'f', 'g', 'gy', 'h', 'hy', 'i', 'j', 'k', 'ky', 'm', 'my', 'n', 'ny',
+        'o', 'p', 'pau', 'py', 'r', 'ry', 's', 'sh', 'sil', 't', 'ts', 'u',
+        'w', 'y', 'z'
+    ]
     phone2idx = {phone: idx for idx, phone in enumerate(phones)}
     idx2phone = {idx: phone for idx, phone in enumerate(phones)}
     return phone2idx, idx2phone
@@ -67,7 +73,8 @@ def create_train_data():
     if hp.data_set == 'bible':
         return create_train_data_bible()
     elif hp.data_set == 'atr503':
-        sound_files, texts_mixed, texts_kana, phones = create_train_data_atr503()
+        sound_files, texts_mixed, texts_kana, phones = create_train_data_atr503(
+        )
         return sound_files, texts_kana
     elif hp.data_set == 'siwis':
         return create_train_data_siwis()
@@ -79,7 +86,8 @@ def create_dual_source_train_data():
     if hp.data_set == 'bible_siwis':
         return create_bible_siwis_train_data()
     if hp.data_set == 'atr503_dual':
-        sound_files, texts_mixed, texts_kana, texts_phone = create_train_data_atr503()
+        sound_files, texts_mixed, texts_kana, texts_phone = create_train_data_atr503(
+        )
         return sound_files, texts_kana, texts_phone
     else:
         raise ValueError('unknown data set')
@@ -150,8 +158,11 @@ def create_train_data_atr503():
         sound_index, text_mixed, text_hiragana, phones = row
         phones = phones.split(' ')
         if hp.reverse_input:
-            text_mixed, text_hiragana, phones = text_mixed[::-1], text_hiragana[::-1], phones[::-1]
-        
+            text_mixed, text_hiragana, phones = text_mixed[::
+                                                           -1], text_hiragana[::
+                                                                              -1], phones[::
+                                                                                          -1]
+
         sound_fname = "nitech_jp_atr503_m001_" + sound_index
         sound_file = hp.atr503_sound_fpath + "/" + sound_fname + ".wav"
 
@@ -167,7 +178,7 @@ def create_train_data_atr503():
             texts_phone.append(
                 np.array([phone2idx[phone]
                           for phone in phones], np.int32).tostring())
-            
+
             sound_files.append(sound_file)
 
             assert len(texts_mixed) == len(texts_kana)
@@ -195,10 +206,19 @@ def load_dual_source_train_data():
     sound_files, texts1, texts2 = create_dual_source_train_data()
     if hp.sanity_check:  # We use a single mini-batch for training to overfit it.
         # ToDo: mix texts1 and texts2
-        sound_files, texts1, texts2 = sound_files[:hp.batch_size] * 1000, texts1[:hp.batch_size] * 1000, texts2[:hp.batch_size] * 1000
+        sound_files, texts1, texts2 = sound_files[:hp.
+                                                  batch_size] * 1000, texts1[:
+                                                                             hp.
+                                                                             batch_size] * 1000, texts2[:
+                                                                                                        hp.
+                                                                                                        batch_size] * 1000
     else:
         # ToDo: exclude samples
-        #sound_files, texts1, texts2 = sound_files[:-hp.num_samples], texts1[:-hp.num_samples], texts2[:-hp.num_samples]
+        sound_files, texts1, texts2 = sound_files[:-hp.
+                                                  num_samples], texts1[:-hp.
+                                                                       num_samples], texts2[:
+                                                                                            -hp.
+                                                                                            num_samples]
         pass
 
     return texts1, texts2, sound_files
@@ -218,3 +238,25 @@ def load_eval_data():
         X[i, :len(_text)] = _text
 
     return X
+
+
+def load_dual_source_eval_data():
+    """We evaluate on the last num_samples."""
+    _, texts1, texts2 = create_dual_source_train_data()
+    if hp.sanity_check:  # We generate samples for the same texts as the ones we've used for training.
+        texts1, texts2 = texts1[:hp.batch_size], texts2[:hp.batch_size]
+    else:
+        texts1, texts2 = texts1[-hp.num_samples:], texts2[-hp.num_samples:]
+
+    X1 = np.zeros(shape=[len(texts1), hp.max_len], dtype=np.int32)
+    X2 = np.zeros(shape=[len(texts2), hp.max_len], dtype=np.int32)
+
+    for i, text in enumerate(texts1):
+        _text = np.fromstring(text, np.int32)  # byte to int
+        X1[i, :len(_text)] = _text
+
+    for i, text in enumerate(texts2):
+        _text = np.fromstring(text, np.int32)  # byte to int
+        X2[i, :len(_text)] = _text
+
+    return X1, X2

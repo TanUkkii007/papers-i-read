@@ -53,7 +53,7 @@ class DualSourceAttentionGraph:
                     self.x2, phone2idx, idx2phone, is_training=is_training, scope="encoder2")  # (N, T, E)
 
                 # Decoder
-                self.outputs1 = dual_decode1(
+                self.outputs1, self.attention_final_state = dual_decode1(
                     self.decoder_inputs, self.memory1, self.memory2,
                     is_training=is_training)  # (N, T', hp.n_mels*hp.r)
                 self.outputs2 = decode2(
