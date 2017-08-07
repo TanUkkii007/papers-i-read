@@ -166,7 +166,7 @@ def create_train_data_atr503():
         sound_fname = "nitech_jp_atr503_m001_" + sound_index
         sound_file = hp.atr503_sound_fpath + "/" + sound_fname + ".wav"
 
-        if hp.min_len <= len(texts_kana) <= hp.max_len:
+        if hp.min_len <= len(text_hiragana) <= hp.max_len:
             texts_mixed.append(
                 np.array([char2idx_ja[char]
                           for char in text_mixed], np.int32).tostring())
