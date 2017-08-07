@@ -12,6 +12,7 @@ from __future__ import print_function
 import tensorflow as tf
 import numpy as np
 import librosa
+import matplotlib.pyplot as plt
 
 import copy
 from hyperparams import Hyperparams as hp
@@ -135,3 +136,14 @@ def restore_shape(array, step, r):
     # Trim zero paddings
     restored = restored[:np.count_nonzero(restored.sum(axis=1))]
     return restored
+
+
+def visualize_attention(alignment_history, memory_label):
+    fig, ax = plt.subplots()
+    pcm = ax.pcolor(alignment_history)
+    fig.colorbar(pcm, ax=ax)
+    plt.xticks(np.arange(0.5, len(memory_label), 1.0), memory_label)
+
+
+def save_figure(file_name):
+    plt.savefig(file_name)

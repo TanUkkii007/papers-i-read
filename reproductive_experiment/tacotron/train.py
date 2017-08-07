@@ -43,7 +43,7 @@ class Graph:
                     self.x, is_training=is_training)  # (N, T, E)
 
                 # Decoder
-                self.outputs1 = decode1(
+                self.outputs1, self.attention_final_state = decode1(
                     self.decoder_inputs, self.memory,
                     is_training=is_training)  # (N, T', hp.n_mels*hp.r)
                 self.outputs2 = decode2(

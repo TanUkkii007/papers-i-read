@@ -217,7 +217,9 @@ def attention_decoder(inputs, memory, num_units=None, scope="attention_decoder",
         by the same name.
     
     Returns:
-      A 3d tensor with shape of [N, T, num_units].    
+      Tuple:
+      A 3d tensor with shape of [N, T, num_units]. 
+      AttentionWrapper final state. 
     '''
     with tf.variable_scope(scope, reuse=reuse):
         if num_units is None:
@@ -225,9 +227,10 @@ def attention_decoder(inputs, memory, num_units=None, scope="attention_decoder",
         
         attention_mecanism = tf.contrib.seq2seq.BahdanauAttention(num_units, memory)
         decoder_cell = tf.contrib.rnn.GRUCell(num_units)
-        cell_with_attention = tf.contrib.seq2seq.AttentionWrapper(decoder_cell, attention_mecanism, num_units)
-        outputs, _ = tf.nn.dynamic_rnn(cell_with_attention, inputs, dtype=tf.float32) # (1, 6, 16)
-    return outputs
+        alignment_history = not is_training
+        cell_with_attention = tf.contrib.seq2seq.AttentionWrapper(decoder_cell, attention_mecanism, num_units, alignment_history=alignment_history)
+        outputs, final_state = tf.nn.dynamic_rnn(cell_with_attention, inputs, dtype=tf.float32) # (1, 6, 16)
+    return outputs, final_state
 
 def dual_attention_decoder(inputs, memory1, memory2, num_units=None, scope="attention_decoder", reuse=None):
     '''Applies a GRU to `inputs`, while attending `memory`.

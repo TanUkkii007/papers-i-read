@@ -51,10 +51,12 @@ def eval():
                 outputs1[:, j, :] = _outputs1[:, j, :]
             outputs2 = sess.run(g.outputs2, {g.outputs1: outputs1})
 
+            attention_final_state = sess.run(g.attention_final_state, {g.x: X, g.y: outputs1})
+
     # Generate wav files
     if not os.path.exists(hp.outputdir): os.mkdir(hp.outputdir)
     with codecs.open(hp.outputdir + '/text.txt', 'w', 'utf-8') as fout:
-        for i, (x, s) in enumerate(zip(X, outputs2)):
+        for i, (x, s, a) in enumerate(zip(X, outputs2, attention_final_state.alignment_history)):
             # write text
             fout.write(
                 str(i) + "\t" + "".join(idx2char[idx]
@@ -71,6 +73,8 @@ def eval():
                 audio = spectrogram2wav(s**hp.power)
             write(hp.outputdir + "/{}_{}.wav".format(mname, i), hp.sr, audio)
 
+            visualize_attention(a[i], [idx2char[idx]for idx in np.fromstring(x, np.int32)])
+            save_figure(hp.outputdir + "/{}_{}_attention.png".format(mname, i))
 
 if __name__ == '__main__':
     eval()
