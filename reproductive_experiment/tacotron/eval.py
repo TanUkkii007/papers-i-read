@@ -33,7 +33,7 @@ def eval():
 
     ah = g.attention_final_state.alignment_history
     alignment_history = ah.gather(tf.range(0, ah.size())) # (decoder_timestep, batch_size, memory_size)
-    alignment_history = tf.transpose(alignment_history, perm=[1,0,2]) # (batch_size, decoder_timestep, memory_size)
+    alignment_history = tf.transpose(alignment_history, perm=[1,2,0]) # (batch_size, memory_size, decoder_timestep)
 
     with g.graph.as_default():
         sv = tf.train.Supervisor()
