@@ -236,7 +236,10 @@ def load_eval_data():
     X = np.zeros(shape=[len(texts), hp.max_len], dtype=np.int32)
     for i, text in enumerate(texts):
         _text = np.fromstring(text, np.int32)  # byte to int
-        X[i, :len(_text)] = _text
+        if hp.reverse_input:
+            X[i, -len(_text):] = _text
+        else:
+            X[i, :len(_text)] = _text
 
     return X
 
