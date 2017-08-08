@@ -142,7 +142,7 @@ def visualize_attention(alignment_history, memory_label):
     fig, ax = plt.subplots()
     pcm = ax.pcolor(alignment_history)
     fig.colorbar(pcm, ax=ax)
-    plt.xticks(np.arange(0.5, len(memory_label), 1.0), memory_label)
+    plt.yticks(np.arange(0.5, len(memory_label), 1.0), memory_label)
 
 
 def save_figure(file_name):
