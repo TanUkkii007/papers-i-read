@@ -35,6 +35,19 @@ batch/ per epoch = 14
 - failed to generate distinct sounds
 - failed to learn alignments
 
+
+### 2017-08-08
+source: kana
+reverse_input = True
+num_epochs = 40
+sanity_check=True
+lr = 0.0005
+decay_step = 500
+decay_rate=0.96
+batch/ per epoch = 1000
+
+- include "EG" for text enbeddings
+
 ## SIWIS
 
 ### 2017-07-30
