@@ -213,13 +213,11 @@ def load_dual_source_train_data():
                                                                                                         hp.
                                                                                                         batch_size] * 1000
     else:
-        # ToDo: exclude samples
         sound_files, texts1, texts2 = sound_files[:-hp.
                                                   num_samples], texts1[:-hp.
                                                                        num_samples], texts2[:
                                                                                             -hp.
                                                                                             num_samples]
-        pass
 
     return texts1, texts2, sound_files
 
