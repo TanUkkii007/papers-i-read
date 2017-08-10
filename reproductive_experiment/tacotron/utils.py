@@ -13,7 +13,7 @@ import tensorflow as tf
 import numpy as np
 import librosa
 import matplotlib.pyplot as plt
-
+import matplotlib
 import copy
 from hyperparams import Hyperparams as hp
 
@@ -139,10 +139,13 @@ def restore_shape(array, step, r):
 
 
 def visualize_attention(alignment_history, memory_label):
+    matplotlib.rc('font', family='IPAGothic')
     fig, ax = plt.subplots()
     pcm = ax.pcolor(alignment_history)
     fig.colorbar(pcm, ax=ax)
     plt.yticks(np.arange(0.5, len(memory_label), 1.0), memory_label)
+    plt.xlabel("Decoder timesteps")
+    plt.ylabel("Encoder states")
 
 
 def save_figure(file_name):

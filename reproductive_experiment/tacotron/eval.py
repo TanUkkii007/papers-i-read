@@ -77,7 +77,7 @@ def eval():
                 audio = spectrogram2wav(s**hp.power)
             write(hp.outputdir + "/{}_{}.wav".format(mname, i), hp.sr, audio)
 
-            visualize_attention(a, [idx2char[idx]for idx in np.fromstring(x, np.int32)])
+            visualize_attention(a, [idx2char[idx] + ' ' for idx in np.fromstring(x, np.int32)])
             save_figure(hp.outputdir + "/{}_{}_attention.png".format(mname, i))
 
 if __name__ == '__main__':
