@@ -21,8 +21,13 @@ from prepro import *
 from networks import encode_vocab, dual_decode1, decode2
 from modules import *
 from data_load import get_dual_source_batch
-from utils import shift_by_one
+from utils import shift_by_one, visualize_attention, figure_to_tensor
 from prepro import load_vocab
+
+# ToDo: use load_dual_source_vocabrary
+char2idx_kana, idx2char_kana = load_vocab_ja_hiragana()
+# ToDo: use load_dual_source_vocabrary
+phone2idx, idx2phone = load_phone_ja()
 
 
 class DualSourceAttentionGraph:
@@ -31,7 +36,8 @@ class DualSourceAttentionGraph:
 
         with self.graph.as_default():
             if is_training:
-                self.x1, self.x2, self.y, self.z, self.num_batch = get_dual_source_batch()
+                self.x1, self.x2, self.y, self.z, self.num_batch = get_dual_source_batch(
+                )
             else:  # Evaluation
                 self.x1 = tf.placeholder(tf.int32, shape=(None, None))
                 self.x2 = tf.placeholder(tf.int32, shape=(None, None))
@@ -41,21 +47,41 @@ class DualSourceAttentionGraph:
             self.decoder_inputs = shift_by_one(self.y)
             with tf.variable_scope("net"):
                 # Encoder 1
-                # ToDo: use load_dual_source_vocabrary 
-                char2idx_kana, idx2char_kana = load_vocab_ja_hiragana()
                 self.memory1 = encode_vocab(
-                    self.x1, char2idx_kana, idx2char_kana, is_training=is_training, scope="encoder1")  # (N, T, E)
-                
+                    self.x1,
+                    char2idx_kana,
+                    idx2char_kana,
+                    is_training=is_training,
+                    scope="encoder1")  # (N, T, E)
+
                 # Encoder 2
-                # ToDo: use load_dual_source_vocabrary
-                phone2idx, idx2phone = load_phone_ja()
                 self.memory2 = encode_vocab(
-                    self.x2, phone2idx, idx2phone, is_training=is_training, scope="encoder2")  # (N, T, E)
+                    self.x2,
+                    phone2idx,
+                    idx2phone,
+                    is_training=is_training,
+                    scope="encoder2")  # (N, T, E)
 
                 # Decoder
-                self.outputs1, self.attention_final_state = dual_decode1(
-                    self.decoder_inputs, self.memory1, self.memory2,
+                self.outputs1, attention_final_state = dual_decode1(
+                    self.decoder_inputs,
+                    self.memory1,
+                    self.memory2,
                     is_training=is_training)  # (N, T', hp.n_mels*hp.r)
+
+                alignment_history1 = attention_final_state.state1_alignment_history.stack(
+                )  # (decoder_timestep, batch_size, memory_size)
+                self.alignment_history1 = tf.transpose(
+                    alignment_history1,
+                    perm=[1, 2,
+                          0])  # (batch_size, memory_size, decoder_timestep)
+                alignment_history2 = attention_final_state.state2_alignment_history.stack(
+                )  # (decoder_timestep, batch_size, memory_size)
+                self.alignment_history2 = tf.transpose(
+                    alignment_history2,
+                    perm=[1, 2,
+                          0])  # (batch_size, memory_size, decoder_timestep)
+
                 self.outputs2 = decode2(
                     self.outputs1,
                     is_training=is_training)  # (N, T', (1+hp.n_fft//2)*hp.r)
@@ -106,7 +132,8 @@ def main():
     with g.graph.as_default():
 
         # Training
-        sv = tf.train.Supervisor(logdir=hp.logdir, save_model_secs=0)
+        sv = tf.train.Supervisor(
+            logdir=hp.logdir, save_model_secs=0, summary_op=g.merged)
 
         with sv.managed_session() as sess:
             for epoch in range(1, hp.num_epochs + 1):
@@ -118,14 +145,35 @@ def main():
                         ncols=70,
                         leave=False,
                         unit='b'):
-                    sess.run(g.train_op)
-                    l1, l2, l = sess.run([g.mean_loss1, g.mean_loss2, g.mean_loss])
-                    print("mean_loss1={}, mean_loss2={}, mean_loss={}".format(l1, l2, l))
+                    _, l1, l2, l, alignment_history1, alignment_history2, x1, x2 = sess.run(
+                        [
+                            g.train_op, g.mean_loss1, g.mean_loss2,
+                            g.mean_loss, g.alignment_history1,
+                            g.alignment_history2, g.x1, g.x2
+                        ])
+                    print("mean_loss1={}, mean_loss2={}, mean_loss={}".format(
+                        l1, l2, l))
 
                 # Write checkpoint files at every epoch
                 gs = sess.run(g.global_step)
                 sv.saver.save(sess, hp.logdir + '/model_epoch_%02d_gs_%d' %
                               (epoch, gs))
+
+                visualize_attention(alignment_history1[0], [
+                    idx2char_kana[idx] + ' '
+                    for idx in np.fromstring(x1[0], np.int32)
+                ])
+                plot1 = figure_to_tensor()
+                attention_image1 = tf.summary.image("attention1 " + gs, plot1)
+
+                visualize_attention(alignment_history1[0], [
+                    idx2phone[idx] for idx in np.fromstring(x2[0], np.int32)
+                ])
+                plot2 = figure_to_tensor()
+                attention_image2 = tf.summary.image("attention2 " + gs, plot2)
+                merged = sess.run(
+                    tf.summary.merge([attention_image1, attention_image2]))
+                sv.summary_computed(sess, merged, gs)
 
 
 if __name__ == '__main__':

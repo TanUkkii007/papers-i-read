@@ -34,14 +34,6 @@ def eval():
     # ToDo: use load_dual_source_vocabrary
     phone2idx, idx2phone = load_phone_ja()
 
-    ah1 = g.attention_final_state.state1_alignment_history
-    alignment_history1 = ah1.gather(tf.range(0, ah1.size())) # (decoder_timestep, batch_size, memory_size)
-    alignment_history1 = tf.transpose(alignment_history1, perm=[1,2,0]) # (batch_size, memory_size, decoder_timestep)
-    ah2 = g.attention_final_state.state2_alignment_history
-    alignment_history2 = ah2.gather(tf.range(0, ah2.size())) # (decoder_timestep, batch_size, memory_size)
-    alignment_history2 = tf.transpose(alignment_history2, perm=[1,2,0]) # (batch_size, memory_size, decoder_timestep)
-
-
     with g.graph.as_default():
         sv = tf.train.Supervisor()
         with sv.managed_session(config=tf.ConfigProto(
@@ -65,11 +57,11 @@ def eval():
                 outputs1[:, j, :] = _outputs1[:, j, :]
             outputs2 = sess.run(g.outputs2, {g.outputs1: outputs1})
 
-            alignment_history1 = sess.run(alignment_history1,
+            alignment_history1 = sess.run(g.alignment_history1,
                                           {g.x1: X1,
                                            g.x2: X2,
                                            g.y: outputs1})
-            alignment_history2 = sess.run(alignment_history2,
+            alignment_history2 = sess.run(g.alignment_history2,
                                           {g.x1: X1,
                                            g.x2: X2,
                                            g.y: outputs1})
