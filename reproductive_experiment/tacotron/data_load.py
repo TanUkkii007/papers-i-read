@@ -129,11 +129,33 @@ class _FuncQueueRunner(tf.train.QueueRunner):
                     self._runs_per_session[sess] -= 1
 
 
+def get_and_process_spectrograms(sound_file):
+    spectrogram, magnitude = get_spectrograms(sound_file)
+    spectrogram = reduce_frames(spectrogram,
+                                     hp.win_length // hp.hop_length, hp.r)
+    magnitude = reduce_frames(magnitude,
+                                   hp.win_length // hp.hop_length, hp.r)
+    return spectrogram, magnitude
+
+
+def prepare_audio_cache(sound_files):
+    audio_cache = {}
+    for sound_file in sound_files:
+        spectrogram, magnitude = get_and_process_spectrograms(sound_file)
+        audio_cache[sound_file] = (spectrogram, magnitude)
+    return audio_cache
+
+
 def get_batch():
     """Loads training data and put them in queues"""
     with tf.device('/cpu:0'):
         # Load data
         texts, sound_files = load_train_data()  # byte, string
+
+        if hp.preload_audio:
+            audio_cache = prepare_audio_cache(sound_files)
+        else:
+            audio_cache = None
 
         # calc total batch count
         num_batch = len(texts) // hp.batch_size
@@ -156,12 +178,10 @@ def get_batch():
 
             # Processing
             _text = np.fromstring(_text, np.int32)  # byte to int
-            _spectrogram, _magnitude = get_spectrograms(_sound_file)
-
-            _spectrogram = reduce_frames(_spectrogram,
-                                         hp.win_length // hp.hop_length, hp.r)
-            _magnitude = reduce_frames(_magnitude,
-                                       hp.win_length // hp.hop_length, hp.r)
+            if hp.preload_audio:
+                _spectrogram, _magnitude = audio_cache[str(_sound_file, 'utf-8')]
+            else:
+                _spectrogram, _magnitude = get_and_process_spectrograms(_sound_file)
 
             return _text, _spectrogram, _magnitude
 
@@ -194,6 +214,11 @@ def get_dual_source_batch():
         # Load data
         texts1, texts2, sound_files = load_dual_source_train_data()  # byte, string
 
+        if hp.preload_audio:
+            audio_cache = prepare_audio_cache(sound_files)
+        else:
+            audio_cache = None
+
         # calc total batch count
         num_batch = len(texts1) // hp.batch_size
 
@@ -217,13 +242,10 @@ def get_dual_source_batch():
             # Processing
             _text1 = np.fromstring(_text1, np.int32)  # byte to int
             _text2 = np.fromstring(_text2, np.int32)  # byte to int
-            _spectrogram, _magnitude = get_spectrograms(_sound_file)
-
-            _spectrogram = reduce_frames(_spectrogram,
-                                         hp.win_length // hp.hop_length, hp.r)
-            _magnitude = reduce_frames(_magnitude,
-                                       hp.win_length // hp.hop_length, hp.r)
-
+            if hp.preload_audio:
+                _spectrogram, _magnitude = audio_cache[str(_sound_file, 'utf-8')]
+            else:
+                _spectrogram, _magnitude = get_and_process_spectrograms(_sound_file)
             return _text1, _text2, _spectrogram, _magnitude
 
         # Decode sound file

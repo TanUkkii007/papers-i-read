@@ -24,6 +24,7 @@ class Hyperparams:
     siwis_sound_fpath = 'The_SIWIS_French_Speech_Synthesis_Database/SiwisFrenchSpeechSynthesisDatabase/wavs'
     max_len = 100 if not sanity_check else 30 # maximum length of text
     min_len = 10 if not sanity_check else 20
+    preload_audio = True
     reverse_input = False
 
     # signal processing
