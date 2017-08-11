@@ -98,6 +98,8 @@ def main():
     g = Graph()
     print("Training Graph loaded")
 
+    summary_g = tf.Graph()
+
     with g.graph.as_default():
 
         # Training
@@ -121,11 +123,13 @@ def main():
                 sv.saver.save(sess, hp.logdir + '/model_epoch_%02d_gs_%d' %
                               (epoch, gs))
                 
-                visualize_attention(alignment_history[0], [idx2char[idx] + ' ' for idx in np.fromstring(x[0], np.int32)])
-                plot = figure_to_tensor()
-                attention_image = tf.summary.image("attention " + gs, plot)
-                merged = sess.run(tf.summary.merge([attention_image]))
-                sv.summary_computed(sess, merged, gs)
+                with summary_g.as_default():
+                    with tf.Session(graph=summary_g) as summary_sess:
+                        visualize_attention(alignment_history[0], [idx2char[idx] + ' ' for idx in np.fromstring(x[0], np.int32)])
+                        plot = figure_to_tensor()
+                        attention_image = tf.summary.image("attention " + gs, plot)
+                        merged = summary_sess.run(tf.summary.merge([attention_image]))
+                        sv.summary_computed(sess, merged, gs)
 
 if __name__ == '__main__':
     main()
