@@ -20,7 +20,7 @@ class Hyperparams:
     bible_sound_fpath = 'WEB'
     atr503_text_file = 'atr503/source.csv'
     atr503_sound_fpath = 'atr503/wav_22050'
-    siwis_text_file = 'The_SIWIS_French_Speech_Synthesis_Database/SiwisFrenchSpeechSynthesisDatabase/text_part1.csv'
+    siwis_text_file = 'The_SIWIS_French_Speech_Synthesis_Database/SiwisFrenchSpeechSynthesisDatabase/text.csv'
     siwis_sound_fpath = 'The_SIWIS_French_Speech_Synthesis_Database/SiwisFrenchSpeechSynthesisDatabase/wavs'
     max_len = 100 if not sanity_check else 30 # maximum length of text
     min_len = 10 if not sanity_check else 20
