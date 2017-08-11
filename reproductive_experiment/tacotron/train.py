@@ -127,7 +127,7 @@ def main():
                     with tf.Session(graph=summary_g) as summary_sess:
                         visualize_attention(alignment_history[0], [idx2char[idx] + ' ' for idx in np.fromstring(x[0], np.int32)])
                         plot = figure_to_tensor()
-                        attention_image = tf.summary.image("attention " + gs, plot)
+                        attention_image = tf.summary.image("attention %d" % gs, plot)
                         merged = summary_sess.run(tf.summary.merge([attention_image]))
                         sv.summary_computed(sess, merged, gs)
 
