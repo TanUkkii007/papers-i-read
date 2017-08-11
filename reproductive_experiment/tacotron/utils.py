@@ -15,6 +15,7 @@ import librosa
 import matplotlib.pyplot as plt
 import matplotlib
 import copy
+import io
 from hyperparams import Hyperparams as hp
 
 
@@ -147,6 +148,14 @@ def visualize_attention(alignment_history, memory_label):
     plt.xlabel("Decoder timesteps")
     plt.ylabel("Encoder states")
 
+
+def figure_to_tensor():
+    buf = io.BytesIO()
+    plt.savefig(buf, format='png')
+    buf.seek(0)
+    plot = tf.image.decode_png(buf.getvalue(), channels=4)
+    plot = tf.expand_dims(plot, 0)
+    return plot
 
 def save_figure(file_name):
     plt.savefig(file_name)

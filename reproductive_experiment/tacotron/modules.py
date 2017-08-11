@@ -206,7 +206,7 @@ def gru(inputs, num_units=None, bidirection=False, scope="gru", reuse=None):
             outputs, _ = tf.nn.dynamic_rnn(cell, inputs, dtype=tf.float32)
             return outputs
 
-def attention_decoder(inputs, memory, num_units=None, is_training=True, scope="attention_decoder", reuse=None):
+def attention_decoder(inputs, memory, num_units=None, is_training=True, alignment_history=True, scope="attention_decoder", reuse=None):
     '''Applies a GRU to `inputs`, while attending `memory`.
     Args:
       inputs: A 3d tensor with shape of [N, T', C']. Decoder inputs.
@@ -227,7 +227,6 @@ def attention_decoder(inputs, memory, num_units=None, is_training=True, scope="a
         
         attention_mecanism = tf.contrib.seq2seq.BahdanauAttention(num_units, memory)
         decoder_cell = tf.contrib.rnn.GRUCell(num_units)
-        alignment_history = not is_training
         cell_with_attention = tf.contrib.seq2seq.AttentionWrapper(decoder_cell, attention_mecanism, num_units, alignment_history=alignment_history)
         outputs, final_state = tf.nn.dynamic_rnn(cell_with_attention, inputs, dtype=tf.float32) # (1, 6, 16)
     return outputs, final_state

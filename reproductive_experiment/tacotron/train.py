@@ -21,7 +21,7 @@ from prepro import *
 from networks import encode, decode1, decode2
 from modules import *
 from data_load import get_batch
-from utils import shift_by_one
+from utils import shift_by_one, visualize_attention, figure_to_tensor
 
 
 class Graph:
@@ -43,9 +43,13 @@ class Graph:
                     self.x, is_training=is_training)  # (N, T, E)
 
                 # Decoder
-                self.outputs1, self.attention_final_state = decode1(
+                self.outputs1, attention_final_state = decode1(
                     self.decoder_inputs, self.memory,
                     is_training=is_training)  # (N, T', hp.n_mels*hp.r)
+                
+                alignment_history = attention_final_state.alignment_history.stack() # (decoder_timestep, batch_size, memory_size)
+                self.alignment_history = tf.transpose(alignment_history, perm=[1,2,0]) # (batch_size, memory_size, decoder_timestep)
+
                 self.outputs2 = decode2(
                     self.outputs1,
                     is_training=is_training)  # (N, T', (1+hp.n_fft//2)*hp.r)
@@ -90,13 +94,14 @@ class Graph:
 
 
 def main():
+    char2idx, idx2char = load_vocab()
     g = Graph()
     print("Training Graph loaded")
 
     with g.graph.as_default():
 
         # Training
-        sv = tf.train.Supervisor(logdir=hp.logdir, save_model_secs=0)
+        sv = tf.train.Supervisor(logdir=hp.logdir, save_model_secs=0, summary_op=g.merged)
 
         with sv.managed_session() as sess:
             for epoch in range(1, hp.num_epochs + 1):
@@ -108,15 +113,19 @@ def main():
                         ncols=70,
                         leave=False,
                         unit='b'):
-                    sess.run(g.train_op)
-                    l1, l2, l = sess.run([g.mean_loss1, g.mean_loss2, g.mean_loss])
+                    _, l1, l2, l, alignment_history, x = sess.run([g.train_op, g.mean_loss1, g.mean_loss2, g.mean_loss, g.alignment_history, g.x])
                     print("mean_loss1={}, mean_loss2={}, mean_loss={}".format(l1, l2, l))
 
                 # Write checkpoint files at every epoch
                 gs = sess.run(g.global_step)
                 sv.saver.save(sess, hp.logdir + '/model_epoch_%02d_gs_%d' %
                               (epoch, gs))
-
+                
+                visualize_attention(alignment_history[0], [idx2char[idx] + ' ' for idx in np.fromstring(x[0], np.int32)])
+                plot = figure_to_tensor()
+                attention_image = tf.summary.image("attention " + gs, plot)
+                merged = sess.run(tf.summary.merge([attention_image]))
+                sv.summary_computed(sess, merged, gs)
 
 if __name__ == '__main__':
     main()

@@ -31,10 +31,6 @@ def eval():
     X = load_eval_data()  # texts
     char2idx, idx2char = load_vocab()
 
-    ah = g.attention_final_state.alignment_history
-    alignment_history = ah.gather(tf.range(0, ah.size())) # (decoder_timestep, batch_size, memory_size)
-    alignment_history = tf.transpose(alignment_history, perm=[1,2,0]) # (batch_size, memory_size, decoder_timestep)
-
     with g.graph.as_default():
         sv = tf.train.Supervisor()
         with sv.managed_session(config=tf.ConfigProto(
@@ -55,7 +51,7 @@ def eval():
                 outputs1[:, j, :] = _outputs1[:, j, :]
             outputs2 = sess.run(g.outputs2, {g.outputs1: outputs1})
 
-            alignment_history = sess.run(alignment_history, {g.x: X, g.y: outputs1})
+            alignment_history = sess.run(g.alignment_history, {g.x: X, g.y: outputs1})
 
     # Generate wav files
     if not os.path.exists(hp.outputdir): os.mkdir(hp.outputdir)
