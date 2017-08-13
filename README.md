@@ -62,7 +62,6 @@
 Deep Neural Networks with Multitask Learning https://ronan.collobert.com/pub/matos/2008_nlp_icml.pdf
 - [ ] Semantically Conditioned LSTM-based Natural Language Generation for Spoken Dialogue Systems https://arxiv.org/abs/1508.01745
 - [ ] Methods for Interpreting and Understanding Deep Neural Networks https://arxiv.org/abs/1706.07979
-- [ ] Scheduled Sampling for Sequence Prediction with Recurrent Neural Networks https://arxiv.org/abs/1506.03099
 - [ ] End-to-end Continuous Speech Recognition using Attention-based Recurrent NN: First Results https://arxiv.org/abs/1412.1602
 - [ ] Attention-Based Models for Speech Recognition https://arxiv.org/abs/1506.07503
 - [ ] Listen, Attend and Spell https://arxiv.org/abs/1508.01211
@@ -76,6 +75,7 @@ Deep Neural Networks with Multitask Learning https://ronan.collobert.com/pub/mat
 - [ ] FaceNet: A Unified Embedding for Face Recognition and Clustering https://arxiv.org/abs/1503.03832
 - [ ] Adam: A Method for Stochastic Optimization https://arxiv.org/abs/1412.6980
 - [ ] Empirical Evaluation of Gated Recurrent Neural Networks on Sequence Modeling https://arxiv.org/abs/1412.3555
+- [ ] Grammar as a Foreign Language https://arxiv.org/abs/1412.7449
 
 #### ready to summarize
 
@@ -90,6 +90,7 @@ Deep Neural Networks with Multitask Learning https://ronan.collobert.com/pub/mat
 - [ ] Effective Approaches to Attention-based Neural Machine Translation https://arxiv.org/abs/1508.04025
 - [ ] Long Short-Term Memory http://web.eecs.utk.edu/~itamar/courses/ECE-692/Bobby_paper1.pdf
 - [ ] On the Properties of Neural Machine Translation: Encoder-Decoder Approaches https://arxiv.org/abs/1409.1259
+- [ ] Scheduled Sampling for Sequence Prediction with Recurrent Neural Networks https://arxiv.org/abs/1506.03099
 
 
 ### Distributed System
