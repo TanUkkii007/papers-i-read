@@ -89,6 +89,7 @@ Deep Neural Networks with Multitask Learning https://ronan.collobert.com/pub/mat
 - [ ] Polyglot Neural Language Models: A Case Study in Cross-Lingual Phonetic Representation Learning https://arxiv.org/abs/1605.03832
 - [ ] Effective Approaches to Attention-based Neural Machine Translation https://arxiv.org/abs/1508.04025
 - [ ] Long Short-Term Memory http://web.eecs.utk.edu/~itamar/courses/ECE-692/Bobby_paper1.pdf
+- [ ] On the Properties of Neural Machine Translation: Encoder-Decoder Approaches https://arxiv.org/abs/1409.1259
 
 
 ### Distributed System
