@@ -15,9 +15,11 @@ class Hyperparams:
     sanity_check = True
 
     # data
-    data_set = 'siwis' # 'bible', 'atr503', 'siwis'
+    data_set = 'siwis' # 'bible', 'atr503', 'siwis', 'lj'
     bible_text_file = 'WEB/text.csv'
     bible_sound_fpath = 'WEB'
+    lj_text_file = 'LJSpeech-1.0/metadata.csv'
+    lj_sound_fpath = 'LJSpeech-1.0/wavs'
     atr503_text_file = 'atr503/source.csv'
     atr503_sound_fpath = 'atr503/wav_22050'
     siwis_text_file = 'The_SIWIS_French_Speech_Synthesis_Database/SiwisFrenchSpeechSynthesisDatabase/text.csv'

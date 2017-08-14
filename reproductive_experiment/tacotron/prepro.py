@@ -72,6 +72,8 @@ def load_phone_ja():
 def create_train_data():
     if hp.data_set == 'bible':
         return create_train_data_bible()
+    elif hp.data_set == 'lj':
+        return create_train_data_lj()
     elif hp.data_set == 'atr503':
         sound_files, texts_mixed, texts_kana, phones = create_train_data_atr503(
         )
@@ -113,6 +115,28 @@ def create_train_data_bible():
         if hp.reverse_input:
             text = text[::-1]
         sound_file = hp.bible_sound_fpath + "/" + sound_fname + ".wav"
+        text = re.sub(r"[^ a-z.',]", "", text.strip().lower())
+
+        if hp.min_len <= len(text) <= hp.max_len:
+            texts.append(
+                np.array([char2idx[char]
+                          for char in text], np.int32).tostring())
+            sound_files.append(sound_file)
+
+    return sound_files, texts
+
+
+def create_train_data_lj():
+    # Load vocabulary
+    char2idx, idx2char = load_vocab_en()
+
+    texts, sound_files = [], []
+    reader = csv.reader(codecs.open(hp.lj_text_file, 'rb', 'utf-8'), delimiter='|')
+    for row in reader:
+        sound_fname, text = row
+        if hp.reverse_input:
+            text = text[::-1]
+        sound_file = hp.lj_sound_fpath + "/" + sound_fname + ".wav"
         text = re.sub(r"[^ a-z.',]", "", text.strip().lower())
 
         if hp.min_len <= len(text) <= hp.max_len:
