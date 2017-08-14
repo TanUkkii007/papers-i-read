@@ -53,7 +53,8 @@ def eval():
 
             alignment_history = sess.run(g.alignment_history, {g.x: X, g.y: outputs1})
 
-            memory = sess.run(tf.transpose(g.memory, perm=[0,2,1]), {g.x: X, g.y: outputs1})
+            memory = sess.run(g.memory, {g.x: X, g.y: outputs1})
+            memory = np.transpose(memory, [0,2,1])
 
 
     # Generate wav files
@@ -81,7 +82,7 @@ def eval():
 
             visualize_activation(m, "encoder output", [idx2char[idx] + ' ' for idx in np.fromstring(x, np.int32)])
             save_figure(hp.outputdir + "/{}_{}_encoder_output.png".format(mname, i))
-            visualize_activation(o1, "decoder output")
+            visualize_activation(np.transpose(o1), "decoder output")
             save_figure(hp.outputdir + "/{}_{}_decoder_output.png".format(mname, i))
             plt.close("all")
             
