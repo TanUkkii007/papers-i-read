@@ -148,6 +148,14 @@ def visualize_attention(alignment_history, memory_label):
     plt.xlabel("Decoder timesteps")
     plt.ylabel("Encoder states")
 
+def visualize_activation(activation, title, xlabel=None):
+    matplotlib.rc('font', family='IPAGothic')
+    fig, ax = plt.subplots()
+    pcm = ax.pcolor(activation)
+    fig.colorbar(pcm, ax=ax)
+    if xlabel is not None:
+        plt.xticks(np.arange(0.5, len(xlabel), 1.0), xlabel)
+    plt.title(title)
 
 def figure_to_tensor():
     buf = io.BytesIO()

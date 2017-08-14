@@ -53,10 +53,13 @@ def eval():
 
             alignment_history = sess.run(g.alignment_history, {g.x: X, g.y: outputs1})
 
+            memory = sess.run(tf.transpose(g.memory, perm=[0,2,1]), {g.x: X, g.y: outputs1})
+
+
     # Generate wav files
     if not os.path.exists(hp.outputdir): os.mkdir(hp.outputdir)
     with codecs.open(hp.outputdir + '/text.txt', 'w', 'utf-8') as fout:
-        for i, (x, s, a) in enumerate(zip(X, outputs2, alignment_history)):
+        for i, (x, s, a, m, o1) in enumerate(zip(X, outputs2, alignment_history, memory, outputs1)):
             # write text
             fout.write(
                 str(i) + "\t" + "".join(idx2char[idx]
@@ -76,6 +79,12 @@ def eval():
             visualize_attention(a, [idx2char[idx] + ' ' for idx in np.fromstring(x, np.int32)])
             save_figure(hp.outputdir + "/{}_{}_attention.png".format(mname, i))
 
+            visualize_activation(m, "encoder output", [idx2char[idx] + ' ' for idx in np.fromstring(x, np.int32)])
+            save_figure(hp.outputdir + "/{}_{}_encoder_output.png".format(mname, i))
+            visualize_activation(o1, "decoder output")
+            save_figure(hp.outputdir + "/{}_{}_decoder_output.png".format(mname, i))
+            plt.close("all")
+            
 if __name__ == '__main__':
     eval()
     print("Done")
