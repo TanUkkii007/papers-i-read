@@ -71,6 +71,26 @@ batch/ per epoch = 139
 - failed to learn when to stop speaking
 
 
+### 2017-08-12
+
+num_epochs = 10000
+sanity_check=False
+lr = 0.0010
+decay_rate=0.96
+decay_step = 300
+batch/ per epoch = 212
+
+after 300 epochs/63600 global steps
+lr = 0.0001
+decay_rate=1.00
+decay_step = 1000
+
+- training data includes part2
+- stopped at 660 epochs/203520 global steps
+- failed to learn alignment
+- mean_loss1=12.15, mean_loss2=0.595, mean_loss=12.75
+- loss seems still decreasing
+
 ## bible
 
 ### 2017-07-31
@@ -97,3 +117,16 @@ batch/ per epoch = 15
 - slow training rate. ~3.2 batch/s.
 - final loss: mean_loss1=0.93, mean_loss2=0.56, mean_loss=1.48
 - failed to generate distinct sounds, but the quality is better than single source one
+
+### 2017-08-11
+
+source: kana-phone
+reverse_input = True
+num_epochs = 1700
+sanity_check=False
+lr = 0.0005
+decay_step = 500
+decay_rate=0.96
+batch/ per epoch = 15
+
+- use pretrained weight from 2017-08-11
