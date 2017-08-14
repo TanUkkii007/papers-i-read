@@ -19,7 +19,7 @@ from itertools import chain, repeat
 
 
 def load_vocab():
-    if hp.data_set == 'bible':
+    if hp.data_set == 'bible' or hp.data_set == 'lj':
         return load_vocab_en()
     elif hp.data_set == 'atr503':
         return load_vocab_ja_hiragana()
@@ -131,21 +131,21 @@ def create_train_data_lj():
     char2idx, idx2char = load_vocab_en()
 
     texts, sound_files = [], []
-    reader = csv.reader(codecs.open(hp.lj_text_file, 'rb', 'utf-8'), delimiter='|')
-    for row in reader:
-        sound_fname, text = row
-        if hp.reverse_input:
-            text = text[::-1]
-        sound_file = hp.lj_sound_fpath + "/" + sound_fname + ".wav"
-        text = re.sub(r"[^ a-z.',]", "", text.strip().lower())
+    with open(hp.lj_text_file, encoding="utf-8") as f:
+        for line in f:
+            sound_fname, _text, text_normalized = line.strip().split('|')
+            if hp.reverse_input:
+                text_normalized = text_normalized[::-1]
+            sound_file = hp.lj_sound_fpath + "/" + sound_fname + ".wav"
+            text_normalized = re.sub(r"[^ a-z.',]", "", text_normalized.strip().lower())
 
-        if hp.min_len <= len(text) <= hp.max_len:
-            texts.append(
-                np.array([char2idx[char]
-                          for char in text], np.int32).tostring())
-            sound_files.append(sound_file)
+            if hp.min_len <= len(text_normalized) <= hp.max_len:
+                texts.append(
+                    np.array([char2idx[char]
+                              for char in text_normalized], np.int32).tostring())
+                sound_files.append(sound_file)
 
-    return sound_files, texts
+        return sound_files, texts
 
 
 def create_train_data_siwis():

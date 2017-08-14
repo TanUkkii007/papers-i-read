@@ -152,6 +152,8 @@ def get_batch():
         # Load data
         texts, sound_files = load_train_data()  # byte, string
 
+        print("%d data are loaded." % len(texts))
+
         if hp.preload_audio:
             audio_cache = prepare_audio_cache(sound_files)
         else:
