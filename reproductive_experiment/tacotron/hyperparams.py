@@ -60,6 +60,8 @@ class Hyperparams:
     decay_step = 300
     decay_rate=0.96
 
+    max_iters=100
+
     # etc
     num_gpus = 1 # If you have multiple gpus, adjust this option, and increase the batch size
                  # and run `train_multiple_gpus.py` instead of `train.py`.

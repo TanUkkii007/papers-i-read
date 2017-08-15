@@ -11,9 +11,11 @@ https://www.github.com/kyubyong/tacotron
 from __future__ import print_function
 import tensorflow as tf
 from tensorflow.contrib.rnn import GRUCell, MultiRNNCell, OutputProjectionWrapper, ResidualWrapper
+from tensorflow.contrib.seq2seq import BasicDecoder, BahdanauAttention, AttentionWrapper
 from hyperparams import Hyperparams as hp
 from dual_source_attention import DualSourceAttentionWrapper
 from rnn_wrappers import ConcatOutputAndAttentionWrapper, DecoderPrenetWrapper
+from helpers import TacoTrainingHelper, TacoTesthelper
 
 def embed(inputs, vocab_size, num_units, zero_pad=True, scope="embedding", reuse=None):
     '''Embeds a given tensor. 
@@ -226,6 +228,7 @@ def attention_decoder(inputs, memory, num_units=None, is_training=True, alignmen
     with tf.variable_scope(scope, reuse=reuse):
         if num_units is None:
             num_units = inputs.get_shape().as_list()[-1]
+        batch_size = inputs.get_shape().as_list()[0]
         
         attention_mecanism = tf.contrib.seq2seq.BahdanauAttention(num_units, memory)
         decoder_cell = DecoderPrenetWrapper(GRUCell(num_units), is_training)
@@ -240,8 +243,19 @@ def attention_decoder(inputs, memory, num_units=None, is_training=True, alignmen
         # Outputs => (N, T', hp.n_mels*hp.r)
         out_dim = inputs.get_shape().as_list()[-1]
         output_cell = OutputProjectionWrapper(decoder_cell, out_dim)
-        outputs, final_state = tf.nn.dynamic_rnn(output_cell, inputs, dtype=tf.float32) # (1, 6, 16)
-    return outputs, final_state[0]
+        decoder_init_state = output_cell.zero_state(batch_size=batch_size, dtype=tf.float32)
+
+        if is_training:
+            helper = TacoTrainingHelper(memory, inputs, hp.n_mels*hp.r, hp.r)
+        else:
+            helper = TacoTesthelper(batch_size, hp.n_mels*hp.r, hp.r)
+        (decoder_outputs, _), final_state, _ = tf.contrib.seq2seq.dynamic_decode(
+            BasicDecoder(output_cell, helper, decoder_init_state),
+            maximum_iterations=hp.max_iters)  # [N, T_out/r, M*r]
+        
+        # Reshape outputs to be one output per entry
+        # mel_outputs = tf.reshape(decoder_outputs, [batch_size, -1, hp.n_mels])  # [N, T_out, M]
+    return decoder_outputs, final_state[0]
 
 def dual_attention_decoder(inputs, memory1, memory2, num_units=None, is_training=True, alignment_history=True, scope="attention_decoder", reuse=None):
     '''Applies a GRU to `inputs`, while attending `memory`.
