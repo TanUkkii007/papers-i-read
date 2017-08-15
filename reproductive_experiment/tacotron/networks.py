@@ -14,6 +14,7 @@ import tensorflow as tf
 from modules import *
 from prepro import load_vocab
 
+
 def encode(inputs, is_training=True, scope="encoder", reuse=None):
     # Load vocabulary
     char2idx, idx2char = load_vocab()
@@ -78,19 +79,23 @@ def decode1(decoder_inputs, memory, is_training=True, scope="decoder1", reuse=No
     '''
     with tf.variable_scope(scope, reuse=reuse):
         # Decoder pre-net
-        dec = prenet(decoder_inputs, is_training=is_training) # (N, T', E/2)
+        # prenet is included in attention_decoder at each timestep
+        # dec = prenet(decoder_inputs, is_training=is_training) # (N, T', E/2)
 
         # Attention RNN
-        dec, final_state = attention_decoder(dec, memory, hp.embed_size, is_training) # (N, T', E)
+        outputs, final_state = attention_decoder(decoder_inputs, memory, hp.embed_size, is_training) # (N, T', E)
 
-        # Decoder RNNs
-        # 2-layer residual GRU
-        dec += gru(dec, hp.embed_size, False, scope="decoder_gru1") # (N, T', E)
-        dec += gru(dec, hp.embed_size, False, scope="decoder_gru2") # (N, T', E)
+        # decoder RNN and seq2seq target projection are included in attention_decoder
 
-        # Outputs => (N, T', hp.n_mels*hp.r)
-        out_dim = decoder_inputs.get_shape().as_list()[-1]
-        outputs = tf.layers.dense(dec, out_dim)
+        # # Decoder RNNs
+        # # 2-layer residual GRU
+        # dec += gru(dec, hp.embed_size, False, scope="decoder_gru1") # (N, T', E)
+        # dec += gru(dec, hp.embed_size, False, scope="decoder_gru2") # (N, T', E)
+
+        # # seq2seq target
+        # # Outputs => (N, T', hp.n_mels*hp.r)
+        # out_dim = decoder_inputs.get_shape().as_list()[-1]
+        # outputs = tf.layers.dense(dec, out_dim)
     return outputs, final_state
 
 def dual_decode1(decoder_inputs, memory1, memory2, is_training=True, scope="dual_decoder1", reuse=None):

@@ -10,8 +10,10 @@ https://www.github.com/kyubyong/tacotron
 
 from __future__ import print_function
 import tensorflow as tf
+from tensorflow.contrib.rnn import GRUCell, MultiRNNCell, OutputProjectionWrapper, ResidualWrapper
 from hyperparams import Hyperparams as hp
 from dual_source_attention import DualSourceAttentionWrapper
+from rnn_wrappers import ConcatOutputAndAttentionWrapper, DecoderPrenetWrapper
 
 def embed(inputs, vocab_size, num_units, zero_pad=True, scope="embedding", reuse=None):
     '''Embeds a given tensor. 
@@ -226,10 +228,20 @@ def attention_decoder(inputs, memory, num_units=None, is_training=True, alignmen
             num_units = inputs.get_shape().as_list()[-1]
         
         attention_mecanism = tf.contrib.seq2seq.BahdanauAttention(num_units, memory)
-        decoder_cell = tf.contrib.rnn.GRUCell(num_units)
-        cell_with_attention = tf.contrib.seq2seq.AttentionWrapper(decoder_cell, attention_mecanism, num_units, alignment_history=alignment_history)
-        outputs, final_state = tf.nn.dynamic_rnn(cell_with_attention, inputs, dtype=tf.float32) # (1, 6, 16)
-    return outputs, final_state
+        decoder_cell = DecoderPrenetWrapper(GRUCell(num_units), is_training)
+        cell_with_attention = tf.contrib.seq2seq.AttentionWrapper(decoder_cell, attention_mecanism, num_units, alignment_history=alignment_history, output_attention=False)
+        # Concatenate attention context vector and RNN cell output into a 512D vector.
+        concat_cell = ConcatOutputAndAttentionWrapper(cell_with_attention)
+        decoder_cell = MultiRNNCell([
+            OutputProjectionWrapper(concat_cell, num_units),
+            ResidualWrapper(GRUCell(num_units)),
+            ResidualWrapper(GRUCell(num_units))
+        ], state_is_tuple=True)
+        # Outputs => (N, T', hp.n_mels*hp.r)
+        out_dim = inputs.get_shape().as_list()[-1]
+        output_cell = OutputProjectionWrapper(decoder_cell, out_dim)
+        outputs, final_state = tf.nn.dynamic_rnn(output_cell, inputs, dtype=tf.float32) # (1, 6, 16)
+    return outputs, final_state[0]
 
 def dual_attention_decoder(inputs, memory1, memory2, num_units=None, is_training=True, alignment_history=True, scope="attention_decoder", reuse=None):
     '''Applies a GRU to `inputs`, while attending `memory`.
