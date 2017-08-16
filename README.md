@@ -76,6 +76,9 @@ Deep Neural Networks with Multitask Learning https://ronan.collobert.com/pub/mat
 - [ ] Adam: A Method for Stochastic Optimization https://arxiv.org/abs/1412.6980
 - [ ] Empirical Evaluation of Gated Recurrent Neural Networks on Sequence Modeling https://arxiv.org/abs/1412.3555
 - [ ] Grammar as a Foreign Language https://arxiv.org/abs/1412.7449
+- [ ] Uncertainty in Deep Learning http://mlg.eng.cam.ac.uk/yarin/blog_2248.html
+- [ ] Learning Hierarchical Features from Generative Models https://arxiv.org/abs/1702.08396
+- [ ] Understanding Black-box Predictions via Influence Functions https://arxiv.org/abs/1703.04730
 
 #### ready to summarize
 
