@@ -24,6 +24,7 @@
 - [ ] Deep Neural Network-Based Speaker Embeddings for End-To-End Speaker Verification http://danielpovey.com/files/2016_slt_xvector.pdf
 - [ ] End-to-end text-dependent speaker verification https://research.google.com/pubs/pub44681.html
 - [ ] Exploring Neural Transducers for End-to-End Speech Recognition https://arxiv.org/abs/1707.07413
+- [ ] EESEN: End-to-End Speech Recognition using Deep RNN Models and WFST-based Decoding https://arxiv.org/abs/1507.08240
 
 #### ready to summarize
 
