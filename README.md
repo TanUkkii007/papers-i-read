@@ -95,7 +95,7 @@ Deep Neural Networks with Multitask Learning https://ronan.collobert.com/pub/mat
 - [ ] Long Short-Term Memory http://web.eecs.utk.edu/~itamar/courses/ECE-692/Bobby_paper1.pdf
 - [ ] On the Properties of Neural Machine Translation: Encoder-Decoder Approaches https://arxiv.org/abs/1409.1259
 - [ ] Scheduled Sampling for Sequence Prediction with Recurrent Neural Networks https://arxiv.org/abs/1506.03099
-
+- [ ] Twin Networks: Using the Future as a Regularizer https://arxiv.org/abs/1708.06742
 
 ### Distributed System
 
