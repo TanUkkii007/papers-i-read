@@ -24,7 +24,7 @@
 - [ ] Deep Neural Network-Based Speaker Embeddings for End-To-End Speaker Verification http://danielpovey.com/files/2016_slt_xvector.pdf
 - [ ] End-to-end text-dependent speaker verification https://research.google.com/pubs/pub44681.html
 - [ ] Exploring Neural Transducers for End-to-End Speech Recognition https://arxiv.org/abs/1707.07413
-- [ ] EESEN: End-to-End Speech Recognition using Deep RNN Models and WFST-based Decoding https://arxiv.org/abs/1507.08240
+
 
 #### ready to summarize
 
@@ -33,6 +33,7 @@
 - [ ] Sequence-to-Sequence Neural Net Models for Grapheme-to-Phoneme Conversion https://arxiv.org/abs/1506.00196
 - [ ] Listening while Speaking: Speech Chain by Deep Learning https://arxiv.org/abs/1707.04879v1
 - [ ] Deep Speaker: an End-to-End Neural Speaker Embedding System https://arxiv.org/abs/1705.02304
+- [ ] EESEN: End-to-End Speech Recognition using Deep RNN Models and WFST-based Decoding https://arxiv.org/abs/1507.08240
 
 
 ### Machine Learning
