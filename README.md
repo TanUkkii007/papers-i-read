@@ -24,6 +24,8 @@
 - [ ] Deep Neural Network-Based Speaker Embeddings for End-To-End Speaker Verification http://danielpovey.com/files/2016_slt_xvector.pdf
 - [ ] End-to-end text-dependent speaker verification https://research.google.com/pubs/pub44681.html
 - [ ] Exploring Neural Transducers for End-to-End Speech Recognition https://arxiv.org/abs/1707.07413
+- [ ] Speech Enhancement Using Bayesian Wavenet http://www.isca-speech.org/archive/Interspeech_2017/abstracts/1672.html
+- [ ] Neural Nets for Generating Music https://medium.com/artists-and-machine-intelligence/neural-nets-for-generating-music-f46dffac21c0
 
 
 #### ready to summarize
@@ -81,6 +83,8 @@ Deep Neural Networks with Multitask Learning https://ronan.collobert.com/pub/mat
 - [ ] Uncertainty in Deep Learning http://mlg.eng.cam.ac.uk/yarin/blog_2248.html
 - [ ] Learning Hierarchical Features from Generative Models https://arxiv.org/abs/1702.08396
 - [ ] Understanding Black-box Predictions via Influence Functions https://arxiv.org/abs/1703.04730
+- [ ] Towards an Automatic Turing Test: Learning to Evaluate Dialogue Responses https://arxiv.org/abs/1708.07149
+
 
 #### ready to summarize
 
