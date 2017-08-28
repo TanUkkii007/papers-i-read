@@ -26,6 +26,7 @@
 - [ ] Exploring Neural Transducers for End-to-End Speech Recognition https://arxiv.org/abs/1707.07413
 - [ ] Speech Enhancement Using Bayesian Wavenet http://www.isca-speech.org/archive/Interspeech_2017/abstracts/1672.html
 - [ ] Neural Nets for Generating Music https://medium.com/artists-and-machine-intelligence/neural-nets-for-generating-music-f46dffac21c0
+- [ ] 日本語テキスト音声合成用記号 http://www.jeita.or.jp/cgi-bin/standard/pdf.cgi?jk_n=1408&jk_pdf_file=20110307080703_8FnXHkG4Y0.pdf
 
 
 #### ready to summarize
