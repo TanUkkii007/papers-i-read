@@ -86,6 +86,8 @@ Deep Neural Networks with Multitask Learning https://ronan.collobert.com/pub/mat
 - [ ] Learning Hierarchical Features from Generative Models https://arxiv.org/abs/1702.08396
 - [ ] Understanding Black-box Predictions via Influence Functions https://arxiv.org/abs/1703.04730
 - [ ] Towards an Automatic Turing Test: Learning to Evaluate Dialogue Responses https://arxiv.org/abs/1708.07149
+- [ ] Hybrid Code Networks: practical and efficient end-to-end dialog control with supervised and reinforcement learning https://arxiv.org/abs/1702.03274
+- [ ] Building Machines That Learn and Think Like People https://arxiv.org/abs/1604.00289
 
 
 #### ready to summarize
