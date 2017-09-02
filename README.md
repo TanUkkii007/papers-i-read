@@ -106,6 +106,18 @@ Deep Neural Networks with Multitask Learning https://ronan.collobert.com/pub/mat
 - [ ] Scheduled Sampling for Sequence Prediction with Recurrent Neural Networks https://arxiv.org/abs/1506.03099
 - [ ] Twin Networks: Using the Future as a Regularizer https://arxiv.org/abs/1708.06742
 
+
+
+### Natural Language Processing
+
+- [ ] Weighted Finite-State Transducers in
+Speech Recognition http://www.openfst.org/twiki/pub/FST/FstBackground/csl01.pdf
+- [ ] SPEECH RECOGNITION WITH WEIGHTED FINITE-STATE TRANSDUCERS http://www.openfst.org/twiki/pub/FST/FstBackground/hbka.pdf
+- [ ] Weighted Automata Algorithms http://www.cs.nyu.edu/~mohri/pub/hwa.pdf
+- [ ] OpenFst: A General and Efficient Weighted
+Finite-State Transducer Library http://www.openfst.org/twiki/pub/FST/FstBackground/ciaa.pdf
+
+
 ### Distributed System
 
 - [ ] [The Google File System](https://github.com/TanUkkii007/blog/blob/master/gfs.md) https://research.google.com/archive/gfs.html
