@@ -24,11 +24,10 @@
 - [ ] Deep Neural Network-Based Speaker Embeddings for End-To-End Speaker Verification http://danielpovey.com/files/2016_slt_xvector.pdf
 - [ ] End-to-end text-dependent speaker verification https://research.google.com/pubs/pub44681.html
 - [ ] Exploring Neural Transducers for End-to-End Speech Recognition https://arxiv.org/abs/1707.07413
-- [ ] Speech Enhancement Using Bayesian Wavenet http://www.isca-speech.org/archive/Interspeech_2017/abstracts/1672.html
 - [ ] Neural Nets for Generating Music https://medium.com/artists-and-machine-intelligence/neural-nets-for-generating-music-f46dffac21c0
 - [ ] 日本語テキスト音声合成用記号 http://www.jeita.or.jp/cgi-bin/standard/pdf.cgi?jk_n=1408&jk_pdf_file=20110307080703_8FnXHkG4Y0.pdf
 - [ ] Deep Learning for Siri’s Voice: On-device Deep Mixture Density Networks for Hybrid Unit Selection Synthesis https://machinelearning.apple.com/2017/08/06/siri-voices.html
-
+- [ ] Probabilistic acoustic tube: a probabilistic generative model of speech for speech analysis/synthesis http://proceedings.mlr.press/v22/ou12.html
 
 #### ready to summarize
 
@@ -38,6 +37,7 @@
 - [ ] Listening while Speaking: Speech Chain by Deep Learning https://arxiv.org/abs/1707.04879v1
 - [ ] Deep Speaker: an End-to-End Neural Speaker Embedding System https://arxiv.org/abs/1705.02304
 - [ ] EESEN: End-to-End Speech Recognition using Deep RNN Models and WFST-based Decoding https://arxiv.org/abs/1507.08240
+- [ ] Speech Enhancement Using Bayesian Wavenet http://www.isca-speech.org/archive/Interspeech_2017/abstracts/1672.html
 
 
 ### Machine Learning
