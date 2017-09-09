@@ -28,6 +28,10 @@
 - [ ] 日本語テキスト音声合成用記号 http://www.jeita.or.jp/cgi-bin/standard/pdf.cgi?jk_n=1408&jk_pdf_file=20110307080703_8FnXHkG4Y0.pdf
 - [ ] Deep Learning for Siri’s Voice: On-device Deep Mixture Density Networks for Hybrid Unit Selection Synthesis https://machinelearning.apple.com/2017/08/06/siri-voices.html
 - [ ] Probabilistic acoustic tube: a probabilistic generative model of speech for speech analysis/synthesis http://proceedings.mlr.press/v22/ou12.html
+- [ ] Investigating the shortcomings of HMM synthesis  http://www.cstr.ed.ac.uk/downloads/publications/2013/ssw8_PS2-4_Merritt.pdf
+- [ ] Generative Adversarial Network-based Postfilter
+for STFT Spectrograms  http://www.kecl.ntt.co.jp/people/kaneko.takuhiro/projects/ganp_stft/index.html
+- [ ] Deep Learning Techniques for Music Generation - A Survey https://arxiv.org/abs/1709.01620
 
 #### ready to summarize
 
@@ -88,6 +92,14 @@ Deep Neural Networks with Multitask Learning https://ronan.collobert.com/pub/mat
 - [ ] Towards an Automatic Turing Test: Learning to Evaluate Dialogue Responses https://arxiv.org/abs/1708.07149
 - [ ] Hybrid Code Networks: practical and efficient end-to-end dialog control with supervised and reinforcement learning https://arxiv.org/abs/1702.03274
 - [ ] Building Machines That Learn and Think Like People https://arxiv.org/abs/1604.00289
+- [ ] Chemception: A Deep Neural Network with Minimal Chemistry Knowledge Matches the Performance of Expert-developed QSAR/QSPR Models https://arxiv.org/abs/1706.06689
+- [ ] A Deep Reinforcement Learning Chatbot https://arxiv.org/abs/1709.02349
+- [ ] Squeeze-and-Excitation Networks https://arxiv.org/abs/1709.01507
+- [ ] Stochastic Backpropagation and Approximate Inference in Deep Generative Models https://arxiv.org/abs/1401.4082
+- [ ] Auto-Encoding Variational Bayes https://arxiv.org/abs/1312.6114
+- [ ] Learning deep architectures for ai https://www.iro.umontreal.ca/~lisa/pointeurs/TR1312.pdf
+- [ ] From neural PCA to deep unsupervised learning https://arxiv.org/abs/1411.7783
+- [ ] Deconstructing the Ladder Network Architecture https://arxiv.org/abs/1511.06430
 
 
 #### ready to summarize
