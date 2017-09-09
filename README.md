@@ -87,7 +87,6 @@ Deep Neural Networks with Multitask Learning https://ronan.collobert.com/pub/mat
 - [ ] Empirical Evaluation of Gated Recurrent Neural Networks on Sequence Modeling https://arxiv.org/abs/1412.3555
 - [ ] Grammar as a Foreign Language https://arxiv.org/abs/1412.7449
 - [ ] Uncertainty in Deep Learning http://mlg.eng.cam.ac.uk/yarin/blog_2248.html
-- [ ] Learning Hierarchical Features from Generative Models https://arxiv.org/abs/1702.08396
 - [ ] Understanding Black-box Predictions via Influence Functions https://arxiv.org/abs/1703.04730
 - [ ] Towards an Automatic Turing Test: Learning to Evaluate Dialogue Responses https://arxiv.org/abs/1708.07149
 - [ ] Hybrid Code Networks: practical and efficient end-to-end dialog control with supervised and reinforcement learning https://arxiv.org/abs/1702.03274
@@ -117,7 +116,7 @@ Deep Neural Networks with Multitask Learning https://ronan.collobert.com/pub/mat
 - [ ] On the Properties of Neural Machine Translation: Encoder-Decoder Approaches https://arxiv.org/abs/1409.1259
 - [ ] Scheduled Sampling for Sequence Prediction with Recurrent Neural Networks https://arxiv.org/abs/1506.03099
 - [ ] Twin Networks: Using the Future as a Regularizer https://arxiv.org/abs/1708.06742
-
+- [ ] Learning Hierarchical Features from Generative Models https://arxiv.org/abs/1702.08396
 
 
 ### Natural Language Processing
