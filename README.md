@@ -121,7 +121,6 @@ Deep Neural Networks with Multitask Learning https://ronan.collobert.com/pub/mat
 
 ### Natural Language Processing
 
-- [ ] Probabilistic Typology: Deep Generative Models of Vowel Inventories https://arxiv.org/abs/1705.01684
 - [ ] Visualizing and Understanding Neural Machine Translation http://aclanthology.coli.uni-saarland.de/pdf/P/P17/P17-1106.pdf
 - [ ] Weighted Finite-State Transducers in
 Speech Recognition http://www.openfst.org/twiki/pub/FST/FstBackground/csl01.pdf
@@ -129,6 +128,10 @@ Speech Recognition http://www.openfst.org/twiki/pub/FST/FstBackground/csl01.pdf
 - [ ] Weighted Automata Algorithms http://www.cs.nyu.edu/~mohri/pub/hwa.pdf
 - [ ] OpenFst: A General and Efficient Weighted
 Finite-State Transducer Library http://www.openfst.org/twiki/pub/FST/FstBackground/ciaa.pdf
+
+#### ready to summarize
+
+- [ ] Probabilistic Typology: Deep Generative Models of Vowel Inventories https://arxiv.org/abs/1705.01684
 
 
 ### Distributed System
