@@ -32,6 +32,7 @@
 - [ ] Generative Adversarial Network-based Postfilter
 for STFT Spectrograms  http://www.kecl.ntt.co.jp/people/kaneko.takuhiro/projects/ganp_stft/index.html
 - [ ] Deep Learning Techniques for Music Generation - A Survey https://arxiv.org/abs/1709.01620
+- [ ] Transfer Learning for Speech and Language Processing https://arxiv.org/abs/1511.06066
 
 #### ready to summarize
 
@@ -117,6 +118,7 @@ Deep Neural Networks with Multitask Learning https://ronan.collobert.com/pub/mat
 - [ ] Scheduled Sampling for Sequence Prediction with Recurrent Neural Networks https://arxiv.org/abs/1506.03099
 - [ ] Twin Networks: Using the Future as a Regularizer https://arxiv.org/abs/1708.06742
 - [ ] Learning Hierarchical Features from Generative Models https://arxiv.org/abs/1702.08396
+- [ ] Improving neural networks by preventing co-adaptation of feature detectors https://arxiv.org/abs/1207.0580
 
 
 ### Natural Language Processing
