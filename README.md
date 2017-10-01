@@ -1,6 +1,6 @@
 # Papers I read
 
-
+ToDo: @shunk031さんの運用方法が良さそうなのでそちらの方法に移行する。
 
 ## Papers
 
@@ -33,6 +33,8 @@
 for STFT Spectrograms  http://www.kecl.ntt.co.jp/people/kaneko.takuhiro/projects/ganp_stft/index.html
 - [ ] Deep Learning Techniques for Music Generation - A Survey https://arxiv.org/abs/1709.01620
 - [ ] Transfer Learning for Speech and Language Processing https://arxiv.org/abs/1511.06066
+- [ ] Statistical Parametric Speech Synthesis Using Generative Adversarial Networks Under A Multi-task Learning Framework https://arxiv.org/abs/1707.01670
+- [ ] Statistical Parametric Speech Synthesis Incorporating Generative Adversarial Networks https://arxiv.org/abs/1709.08041
 
 #### ready to summarize
 
@@ -100,6 +102,9 @@ Deep Neural Networks with Multitask Learning https://ronan.collobert.com/pub/mat
 - [ ] Learning deep architectures for ai https://www.iro.umontreal.ca/~lisa/pointeurs/TR1312.pdf
 - [ ] From neural PCA to deep unsupervised learning https://arxiv.org/abs/1411.7783
 - [ ] Deconstructing the Ladder Network Architecture https://arxiv.org/abs/1511.06430
+- [ ] Neural Optimizer Search with Reinforcement Learning https://arxiv.org/abs/1709.07417
+- [ ] Deep Predictive Learning: A Comprehensive Model of Three Visual Streams https://arxiv.org/abs/1709.04654
+- [ ] Poincaré Embeddings for Learning Hierarchical Representations https://arxiv.org/abs/1705.08039
 
 
 #### ready to summarize
@@ -130,6 +135,7 @@ Speech Recognition http://www.openfst.org/twiki/pub/FST/FstBackground/csl01.pdf
 - [ ] Weighted Automata Algorithms http://www.cs.nyu.edu/~mohri/pub/hwa.pdf
 - [ ] OpenFst: A General and Efficient Weighted
 Finite-State Transducer Library http://www.openfst.org/twiki/pub/FST/FstBackground/ciaa.pdf
+- [ ] Natural Language Processing (almost) from Scratch http://www.jmlr.org/papers/volume12/collobert11a/collobert11a.pdf
 
 #### ready to summarize
 
