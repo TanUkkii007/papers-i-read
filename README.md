@@ -35,6 +35,7 @@ for STFT Spectrograms  http://www.kecl.ntt.co.jp/people/kaneko.takuhiro/projects
 - [ ] Transfer Learning for Speech and Language Processing https://arxiv.org/abs/1511.06066
 - [ ] Statistical Parametric Speech Synthesis Using Generative Adversarial Networks Under A Multi-task Learning Framework https://arxiv.org/abs/1707.01670
 - [ ] Statistical Parametric Speech Synthesis Incorporating Generative Adversarial Networks https://arxiv.org/abs/1709.08041
+- [ ] Statistical Voice Conversion with WaveNet-Based Waveform Generation http://www.isca-speech.org/archive/Interspeech_2017/abstracts/0986.html
 
 #### ready to summarize
 
